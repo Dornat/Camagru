@@ -1,0 +1,20 @@
+body {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	height: 50vh;
+	background-color: #e3eced;
+}
+
+.sign-up-form-container {
+	flex-direction: column;
+}
+.field-of-signup-form {
+	width: 20em;
+}
+.submit-btn-for-signup {
+	width: 21em;
+}
+.sign-up-gohome {
+	margin-top: 5px;
+}
