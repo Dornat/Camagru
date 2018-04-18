@@ -1,6 +1,4 @@
-<?php
-include("config/setup.php");
-?>
+<?php include("config/setup.php"); ?>
 <!DOCTYPE html>
 <html lang="en">
 	<head>

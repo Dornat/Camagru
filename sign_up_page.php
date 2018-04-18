@@ -1,3 +1,21 @@
+<?php
+include("config/setup.php");
+
+function isUserAlreadyExistsInDb($userName, $pdo) {
+	$statement = "SELECT `login` FROM `users` WHERE `login`=?";
+	$preparedStatement = $pdo->prepare($statement);
+	$preparedStatement->execute([$userName]);
+	return ($preparedStatement->fetch());
+}
+
+function isEmailAlreadyTaken($email, $pdo) {
+	$statement = "SELECT `email` FROM `users` WHERE `email`=?";
+	$preparedStatement = $pdo->prepare($statement);
+	$preparedStatement->execute([$email]);
+	return ($preparedStatement->fetch());
+}
+
+?>
 <!DOCTYPE html>
 <html lang="en">
 	<head>
@@ -7,14 +25,43 @@
 		<link rel="stylesheet" href="css/sign_up_page.css">
 	</head>
 	<body>
-		<form action="login.php" class="login-form-container sign-up-form-container">
-			<input class="field-of-login-form field-of-signup-form" type="text" name="login" placeholder="Login" required pattern="^[a-zA-z_0-9]{1,32}$" oninput="setCustomValidity(''); checkValidity(); setCustomValidity(validity.valid ? '' : 'Invalid login.');">
-			<input class="field-of-login-form field-of-signup-form" type="text" name="email" placeholder="Email" required pattern="^[A-Za-z0-9._\-]{1,32}@(?!\.)[A-Za-z0-9.\-]+\.[A-Za-z]{2,63}$" oninput="setCustomValidity(''); checkValidity(); setCustomValidity(validity.valid ? '' : 'Invalid Email address.');">
+		<form id="form" action="sign_up_page.php" method="post" class="login-form-container sign-up-form-container">
+		<input class="field-of-login-form field-of-signup-form" type="text" name="login" placeholder="Login" required pattern="^[a-zA-z_0-9]{1,32}$" oninput="setCustomValidity(''); checkValidity(); setCustomValidity(validity.valid ? '' : 'Invalid login.');">
+			<input id="input2" class="field-of-login-form field-of-signup-form" type="text" name="email" placeholder="Email" required pattern="^[A-Za-z0-9._\-]{1,32}@(?!\.)[A-Za-z0-9.\-]+\.[A-Za-z]{2,63}$" oninput="setCustomValidity(''); checkValidity(); setCustomValidity(validity.valid ? '' : 'Invalid Email address.');">
 			<input class="field-of-login-form field-of-signup-form" type="password" name="passwd" placeholder="Password" required pattern="^(?=.*[A-Z])(?=.*[0-9]).{6,32}$" oninput="setCustomValidity(''); checkValidity(); setCustomValidity(validity.valid ? '' : 'Your password must have not less than 6 letters, must contain at least one normal letter, one CAPITAL letter and one digit.');">
+			<div id="caps" class="caps-lock-is-on">* CAPS LOCK IS ON</div>
+<?php
+if (isset($_POST['submit'])):
+	if ($_POST['submit'] === 'Create account'):
+		if (isUserAlreadyExistsInDb($_POST['login'], $pdo)): ?>
+			<div class="user-already-exists">* Username already exists</div>
+<?php	elseif (isEmailAlreadyTaken($_POST['email'], $pdo)): ?>
+			<div class="user-already-exists">* Email is already in use</div>
+<?php	else:
+			$statement = "INSERT INTO `users` (`login`, `email`, `password`) VALUES (?, ?, ?)";
+			$preparedStatement = $pdo->prepare($statement);
+			$hashedPassword = hash('sha256', $_POST['passwd']);
+			$preparedStatement->execute([$_POST['login'], $_POST['email'], $hashedPassword]);
+		endif;
+	endif;
+endif;
+?>
 			<input class="field-of-login-form submit-btn-for-login-form submit-btn-for-signup" type="submit" name="submit" value="Create account">
 			<div class="sign-up-forgot-container sign-up-gohome">
 				<p class="sign-up">or <a class="sign-up-href" href="index.php">Go home</a></p>
 			</div>
 		</form>
 	</body>
+	<script>
+		document.addEventListener('keydown', function(event) {
+			var caps = event.getModifierState && event.getModifierState( 'CapsLock' );
+			if (caps == true) {
+				var div = document.getElementById("caps");
+				div.style.visibility = 'visible';
+			} else {
+				var div = document.getElementById("caps");
+				div.style.visibility = 'hidden';
+			}
+		});
+	</script>
 </html>

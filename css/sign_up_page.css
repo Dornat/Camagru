@@ -18,3 +18,12 @@ body {
 .sign-up-gohome {
 	margin-top: 5px;
 }
+
+.caps-lock-is-on {
+	visibility: hidden;
+	color: red;
+}
+
+.user-already-exists {
+	color: red;
+}
