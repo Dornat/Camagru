@@ -46,7 +46,9 @@ class PdoInitialiser {
 							`id` INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
 							`login` varchar(32) NOT NULL,
 							`email` varchar(255) NOT NULL,
-							`password` varchar(255) NOT NULL)";
+							`password` varchar(255) NOT NULL,
+							`is_verified` ENUM(\"false\", \"true\") DEFAULT \"false\" NOT NULL,
+							`verif_code` varchar(255) NOT NULL)";
 		$pdo->query($queryStatement);
 	}
 }
