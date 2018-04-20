@@ -19,3 +19,20 @@ header {
 		align-items: center;
 	}
 }
+
+.user-button-container {
+	display: flex;
+}
+.user-button {
+	height: 100%;
+	width: 7em;
+	font-size: 1.1em;
+	border: none;
+	outline: none;
+	background-color: #e3eced;
+	cursor: pointer;
+	transition: background-color .3s;
+}
+.user-button:hover {
+	background-color: #cce5e8;
+}
