@@ -22,8 +22,10 @@ body {
 .caps-lock-is-on {
 	visibility: hidden;
 	color: red;
+	font-size: 0.8em;
 }
 
 .user-already-exists {
 	color: red;
+	font-size: 0.8em;
 }

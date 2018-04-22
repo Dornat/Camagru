@@ -26,23 +26,26 @@ function isEmailAlreadyTaken($email, $pdo) {
 	</head>
 	<body>
 		<form id="form" action="sign_up_page.php" method="post" class="login-form-container sign-up-form-container">
-		<input class="field-of-login-form field-of-signup-form" type="text" name="login" placeholder="Login" required pattern="^[a-zA-Z_0-9]{1,32}$" oninput="setCustomValidity(''); checkValidity(); setCustomValidity(validity.valid ? '' : 'Invalid login.');">
+			<input class="field-of-login-form field-of-signup-form" type="text" name="login" placeholder="Login" required pattern="^[a-zA-Z_0-9]{1,32}$" oninput="setCustomValidity(''); checkValidity(); setCustomValidity(validity.valid ? '' : 'Invalid login.');">
 			<input id="input2" class="field-of-login-form field-of-signup-form" type="text" name="email" placeholder="Email" required pattern="^[A-Za-z0-9._\-]{1,32}@(?!\.)[A-Za-z0-9.\-]+\.[A-Za-z]{2,63}$" oninput="setCustomValidity(''); checkValidity(); setCustomValidity(validity.valid ? '' : 'Invalid Email address.');">
 			<input class="field-of-login-form field-of-signup-form" type="password" name="passwd" placeholder="Password" required pattern="^(?=.*[A-Z])(?=.*[0-9]).{6,32}$" oninput="setCustomValidity(''); checkValidity(); setCustomValidity(validity.valid ? '' : 'Your password must have not less than 6 letters, must contain at least one normal letter, one CAPITAL letter and one digit.');">
 			<div id="caps" class="caps-lock-is-on">* CAPS LOCK IS ON</div>
-<?php
+<div class="user-already-exists">&nbsp;<?php
 if (isset($_POST['submit'])):
 	if ($_POST['submit'] === 'Create account'):
-		if (isUserAlreadyExistsInDb($_POST['login'], $pdo)): ?>
-			<div class="user-already-exists">* Username already exists</div>
-<?php	elseif (isEmailAlreadyTaken($_POST['email'], $pdo)): ?>
-			<div class="user-already-exists">* Email is already in use</div>
-<?php	else:
+		if (isUserAlreadyExistsInDb($_POST['login'], $pdo)):
+			echo "* Username already exists";
+		elseif (isEmailAlreadyTaken($_POST['email'], $pdo)):
+			echo "* Email is already in use";
+		else:
 			$statement = "INSERT INTO `users` (`login`, `email`, `password`, `verif_code`) VALUES (?, ?, ?, ?)";
 			$preparedStatement = $pdo->prepare($statement);
 			$hashedPassword = hash('sha256', $_POST['passwd']);
 			$verificationCode = bin2hex(random_bytes(8));
 			$preparedStatement->execute([$_POST['login'], $_POST['email'], $hashedPassword, $verificationCode]);
+
+			session_start();
+			$_SESSION['email'] = $_POST['email'];
 
 			$mailMassage = '<html><head>';
 			$mailMassage .= '<title>Thanks for registration!</title></head>';
@@ -57,10 +60,11 @@ if (isset($_POST['submit'])):
 			$mailHeaders .= 'From: noreply@camagru.com' . "\r\n";
 
 			$mailReturnValue = mail($_POST['email'], "Registration to Camagru", $mailMassage, $mailHeaders);
+			header("Location: thanks_for_registration_page.php");
 		endif;
 	endif;
 endif;
-?>
+?></div>
 			<input class="field-of-login-form submit-btn-for-login-form submit-btn-for-signup" type="submit" name="submit" value="Create account">
 			<div class="sign-up-forgot-container sign-up-gohome">
 				<p class="sign-up">or <a class="sign-up-href" href="index.php">Go home</a></p>
