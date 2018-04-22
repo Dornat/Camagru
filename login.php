@@ -3,10 +3,20 @@ include("config/setup.php");
 session_start();
 
 if (postSubmitIsSetToLogin()) {
-	if (loginIsValid($pdo) && passwordIsValid($pdo)) {
-		setSessionUserNameToLogin($pdo);
+	if (loginIsValid($pdo)) {
+		$_SESSION['userExistence'] = 'exists';
+		if (loginPasswordMatches($pdo)) {
+			setSessionUserNameToLogin();
+			$_SESSION['wrongPassword'] = 'good';
+		} else {
+			$_SESSION['wrongPassword'] = 'wrong';
+		}
+	} else {
+		$_SESSION['userExistence'] = 'doesNotExists';
 	}
 }
+
+header("Location: index.php");
 
 function postSubmitIsSetToLogin() {
 	if (isset($_POST['submit'])) {
@@ -22,7 +32,7 @@ function postSubmitIsSetToLogin() {
 function loginIsValid($pdo) {
 	$statement = "SELECT `login` FROM `users` WHERE `login`=?";
 	$preparedStatement = $pdo->prepare($statement);
-	$preparedStatement->execute([$_POST['Login']]);
+	$preparedStatement->execute([$_POST['login']]);
 	$userName = $preparedStatement->fetchAll();
 	if (empty($userName[0][0])) {
 		return false;
@@ -30,20 +40,19 @@ function loginIsValid($pdo) {
 	return true;
 }
 
-function passwordIsValid($pdo) {
+function loginPasswordMatches($pdo) {
 	$password = hash('sha256', $_POST['passwd']);
-	$statement = "SELECT `password` FROM `users` WHERE `password`=?";
+	$statement = "SELECT `login` FROM `users` WHERE `password`=?";
 	$preparedStatement = $pdo->prepare($statement);
-	$preparedStatement->execute([$_POST['Login']]);
-	$userName = $preparedStatement->fetchAll();
-
+	$preparedStatement->execute([$password]);
+	$match = $preparedStatement->fetchAll();
+	if (empty($match[0][0])) {
+		return false;
+	}
+	return true;
 }
 
-function setSessionUserNameToLogin($pdo) {
-	$statement = "SELECT `login` FROM `users` WHERE `login`=?";
-	$preparedStatement = $pdo->prepare($statement);
-	$preparedStatement->execute([$_POST['Login']]);
-	$userName = $preparedStatement->fetchAll();
-	$_SESSION['userName'] = $userName[0][0];
+function setSessionUserNameToLogin() {
+	$_SESSION['userName'] = $_POST['login'];
 }
 ?>

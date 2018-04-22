@@ -1,3 +1,9 @@
+.login-form-outer-container {
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	padding-top: 1em;
+}
 .login-form-container {
 	display: flex;
 	justify-content: center;
@@ -64,4 +70,13 @@ input {
 	.sign-up-forgot-container {
 		margin-top: 5px;
 	}
+}
+
+.invalid-input {
+	margin-top: 3px;
+	font-size: 0.7em;
+}
+.invalid-input p {
+	margin: 0 0 0 0.5em;
+	color: red;
 }
