@@ -9,3 +9,8 @@ body {
 	justify-content: center;
 	height: 60vh;
 }
+
+.varification-container-div {
+	color: #3e5154;
+	margin: 0 10% 0 10%;
+}

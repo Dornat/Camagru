@@ -5,7 +5,7 @@
 		<input class="field-of-login-form submit-btn-for-login-form" type="submit" name="submit" value="Login">
 		<div class="sign-up-forgot-container">
 			<p class="sign-up">or <a class="sign-up-href" href="sign_up_page.php">Sign up</a></p>
-			<p class="sign-up"><a class="sign-up-href" href="#">Forgot password?</a></p>
+			<p class="sign-up"><a class="sign-up-href" href="forgot_password_page.php">Forgot password?</a></p>
 		</div>
 	</div>
 	<div class="invalid-input">

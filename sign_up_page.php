@@ -1,21 +1,4 @@
-<?php
-include("config/setup.php");
-
-function isUserAlreadyExistsInDb($userName, $pdo) {
-	$statement = "SELECT `login` FROM `users` WHERE `login`=?";
-	$preparedStatement = $pdo->prepare($statement);
-	$preparedStatement->execute([$userName]);
-	return ($preparedStatement->fetch());
-}
-
-function isEmailAlreadyTaken($email, $pdo) {
-	$statement = "SELECT `email` FROM `users` WHERE `email`=?";
-	$preparedStatement = $pdo->prepare($statement);
-	$preparedStatement->execute([$email]);
-	return ($preparedStatement->fetch());
-}
-
-?>
+<?php include("config/setup.php"); ?>
 <!DOCTYPE html>
 <html lang="en">
 	<head>
@@ -47,19 +30,13 @@ if (isset($_POST['submit'])):
 			session_start();
 			$_SESSION['email'] = $_POST['email'];
 
-			$mailMassage = '<html><head>';
-			$mailMassage .= '<title>Thanks for registration!</title></head>';
-			$mailMassage .= '<body><h1>Thank you for registration to Camagru!</h1>';
-			$mailMassage .= '<p>Your login is: ' . $_POST['login'] . '</p>';
-			$mailMassage .= '<p>Your password is: ' . $_POST['passwd'] . ' (don\'t lose it)</p>';
-			$mailMassage .= '<p>To finish your registration follow the link below:</p>';
-			$mailMassage .= '<a href="http://127.0.0.1:8100/user_email_varification.php?verif_code=' . $verificationCode . '">Click on me please</a></body></html>';
+			$mailMessage = emailMessage($_POST['login'], $_POST['passwd'], $verificationCode);
 
 			$mailHeaders = 'MIME-version: 1.0' . "\r\n";
 			$mailHeaders .= 'Content-Type:text/html;charset=UTF-8' . "\r\n";
 			$mailHeaders .= 'From: noreply@camagru.com' . "\r\n";
 
-			$mailReturnValue = mail($_POST['email'], "Registration to Camagru", $mailMassage, $mailHeaders);
+			$mailReturnValue = mail($_POST['email'], "Registration to Camagru", $mailMessage, $mailHeaders);
 			header("Location: thanks_for_registration_page.php");
 		endif;
 	endif;
@@ -84,3 +61,31 @@ endif;
 		});
 	</script>
 </html>
+<?php
+
+function isUserAlreadyExistsInDb($userName, $pdo) {
+	$statement = "SELECT `login` FROM `users` WHERE `login`=?";
+	$preparedStatement = $pdo->prepare($statement);
+	$preparedStatement->execute([$userName]);
+	return ($preparedStatement->fetch());
+}
+
+function isEmailAlreadyTaken($email, $pdo) {
+	$statement = "SELECT `email` FROM `users` WHERE `email`=?";
+	$preparedStatement = $pdo->prepare($statement);
+	$preparedStatement->execute([$email]);
+	return ($preparedStatement->fetch());
+}
+
+function emailMessage($login, $password, $verificationCode) {
+	$message = "<html><head>";
+	$message .= "<title>Thanks for registration!</title></head>";
+	$message .= "<body><h1>Thank you for registration to Camagru!</h1>";
+	$message .= "<p>Your login is: $login</p>";
+	$message .= "<p>Your password is: $password (don't lose it)</p>";
+	$message .= "<p>To finish your registration follow the link below:</p>";
+	$message .= "<a href=\"http://127.0.0.1:8100/user_email_varification.php?verif_code=$verificationCode\">Click on me please</a></body></html>";
+
+	return $message;
+}
+?>
