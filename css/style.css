@@ -36,3 +36,8 @@ header {
 .user-button:hover {
 	background-color: #cce5e8;
 }
+
+.logo {
+	text-decoration: none;
+	color: #3e5154;
+}

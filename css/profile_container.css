@@ -1,0 +1,45 @@
+.profile-container {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	flex-direction: column;
+}
+.profile-inner-container {
+	display: flex;
+	align-items: center;
+	flex-direction: column;
+	width: 40%;
+	padding: 2em 5em 5em;
+    margin-top: 4em;
+	background: #e0eff1;
+	box-shadow: 0 1px 4px rgba(0, 0, 0, .6);
+}
+.profile-inner-container h2 {
+	align-self: flex-start;
+}
+.profile-inner-container .field-of-login-form {
+	width: 30em;
+}
+@media screen and (max-width: 900px) {
+	.profile-inner-container .field-of-login-form {
+		width: 20em;
+	}
+}
+@media screen and (max-width: 475px) {
+	.profile-inner-container .field-of-login-form {
+		width: 15em;
+	}
+}
+.profile-form-container {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	flex-direction: column;
+}
+
+.careful-message {
+	margin: 0 0 1em;
+	align-self: flex-start;
+	font-size: 0.7em;
+	font-style: italic;
+}

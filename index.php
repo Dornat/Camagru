@@ -1,13 +1,3 @@
-<?php
-include("config/setup.php");
-session_start();
-
-if (isset($_POST['logout'])) {
-	if ($_POST['logout'] === 'logout') {
-		$_SESSION['userName'] = "";
-	}
-}
-?>
 <!DOCTYPE html>
 <html lang="en">
 	<head>
@@ -16,31 +6,8 @@ if (isset($_POST['logout'])) {
 		<link rel="stylesheet" href="css/login_form.css">
 	</head>
 	<body>
-		<header>
-			<div class="navbar-container">
-				<div>
-					<h1>Camagru!</h1>
-				</div>
-			</div>
-			<?php if (userNameIsSet()) { ?>
-			<div class="user-button-container">
-				<button class="user-button"><?php echo $_SESSION['userName']; ?></button>
-				<a href="logout.php"><button class="user-button">Logout</button></a>
-			</div>
-			<?php } else { include "login_form.php"; } ?>
-		</header>
+		<?php include "header.php"; ?>
+		 <video id="video" style="-moz-transform: scaleX(-1); -o-transform: scaleX(-1); -webkit-transform: scaleX(-1); transform: scaleX(-1); filter: FlipH; -ms-filter: \"FlipH\";" width="640" height="480" autoplay></video>
 	</body>
+	<script src="js/camera_setup.js"> </script>
 </html>
-<?php
-function userNameIsSet() {
-	if (isset($_SESSION['userName'])) {
-		if (empty($_SESSION['userName'])) {
-			return false;
-		} else {
-			return true;
-		}
-	} else {
-		return false;
-	}
-}
-?>

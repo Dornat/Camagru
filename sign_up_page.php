@@ -25,16 +25,19 @@ if (isset($_POST['submit'])):
 			$preparedStatement = $pdo->prepare($statement);
 			$hashedPassword = hash('sha256', $_POST['passwd']);
 			$verificationCode = bin2hex(random_bytes(8));
-			$preparedStatement->execute([$_POST['login'], $_POST['email'], $hashedPassword, $verificationCode]);
+			$preparedStatement->execute([strtolower($_POST['login']), strtolower($_POST['email']), $hashedPassword, $verificationCode]);
 
 			session_start();
-			$_SESSION['email'] = $_POST['email'];
+			$_SESSION['email'] = strtolower($_POST['email']);
 
-			$mailMessage = emailMessage($_POST['login'], $_POST['passwd'], $verificationCode);
+			$mailMessage = emailMessage(strtolower($_POST['login']), $_POST['passwd'], $verificationCode);
 
 			$mailHeaders = 'MIME-version: 1.0' . "\r\n";
 			$mailHeaders .= 'Content-Type:text/html;charset=UTF-8' . "\r\n";
 			$mailHeaders .= 'From: noreply@camagru.com' . "\r\n";
+			$mailHeaders .= 'Content-Transfer-Encoding: 8bit' . "\r\n";
+			$mailHeaders .= 'Date: ' . date("r (T)") . "\r\n";
+			$mailHeaders .= iconv_mime_encode("Subject", "Registration to Camagru");
 
 			$mailReturnValue = mail($_POST['email'], "Registration to Camagru", $mailMessage, $mailHeaders);
 			header("Location: thanks_for_registration_page.php");
@@ -85,6 +88,7 @@ function emailMessage($login, $password, $verificationCode) {
 	$message .= "<p>Your password is: $password (don't lose it)</p>";
 	$message .= "<p>To finish your registration follow the link below:</p>";
 	$message .= "<a href=\"http://127.0.0.1:8100/user_email_varification.php?verif_code=$verificationCode\">Click on me please</a></body></html>";
+	$message .= "<p><em>If you don't understand whats going on. Just ignore this email.</em></p>";
 
 	return $message;
 }

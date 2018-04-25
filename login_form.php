@@ -12,6 +12,10 @@
 <?php	if (isset($_SESSION['userExistence'])):
 			if ($_SESSION['userExistence'] === 'doesNotExists'): ?>
 				<p>* User does not exists</p>
+<?php		elseif (isset($_SESSION['isVerified'])): ?>
+<?php			if ($_SESSION['isVerified'] === 'notVerified'): ?>
+					<p>* Only verified users can log in</p>
+<?php			endif; ?>
 <?php		elseif (isset($_SESSION['wrongPassword'])): ?>
 <?php			if ($_SESSION['wrongPassword'] === 'wrong'): ?>
 					<p>* Wrong password</p>

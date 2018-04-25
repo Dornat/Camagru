@@ -5,9 +5,12 @@ session_start();
 if (postSubmitIsSetToLogin()) {
 	if (loginIsValid($pdo)) {
 		$_SESSION['userExistence'] = 'exists';
-		if (loginPasswordMatches($pdo)) {
+		if (loginPasswordMatches($pdo) && userIsVerified($pdo)) {
 			setSessionUserNameToLogin();
+			$_SESSION['isVerified'] = 'verified';
 			$_SESSION['wrongPassword'] = 'good';
+		} else if (userIsVerified($pdo) === false) {
+			$_SESSION['isVerified'] = 'notVerified';
 		} else {
 			$_SESSION['wrongPassword'] = 'wrong';
 		}
@@ -52,7 +55,18 @@ function loginPasswordMatches($pdo) {
 	return true;
 }
 
+function userIsVerified($pdo) {
+	$statement = "SELECT `is_verified` FROM `users` WHERE `login`=?";
+	$preparedStatement = $pdo->prepare($statement);
+	$preparedStatement->execute([$_POST['login']]);
+	$match = $preparedStatement->fetchAll();
+	if ($match[0][0] === "false") {
+		return false;
+	}
+	return true;
+}
+
 function setSessionUserNameToLogin() {
-	$_SESSION['userName'] = $_POST['login'];
+	$_SESSION['userName'] = strtolower($_POST['login']);
 }
 ?>

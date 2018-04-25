@@ -27,8 +27,12 @@ if (isset($_POST['submit'])) {
 			$mailHeaders = 'MIME-version: 1.0' . "\r\n";
 			$mailHeaders .= 'Content-Type:text/html;charset=UTF-8' . "\r\n";
 			$mailHeaders .= 'From: noreply@camagru.com' . "\r\n";
+			$mailHeaders .= 'Content-Transfer-Encoding: 8bit' . "\r\n";
+			$mailHeaders .= 'Date: ' . date("r (T)") . "\r\n";
+			$mailHeaders .= iconv_mime_encode("Subject", "Password reset");
 
 			$mailReturnValue = mail($_POST['email'], "Camagru password reset", $resetMessage, $mailHeaders);
+			setSessionEmail();
 			header("Location: reset_password_page.php");
 		} else {
 			echo "* Email is not registered";
@@ -67,5 +71,10 @@ function emailResetMessage($tempPassword) {
 	$message .= "</body></html>";
 
 	return $message;
+}
+
+function setSessionEmail() {
+	session_start();
+	$_SESSION['email'] = $_POST['email'];
 }
 ?>
