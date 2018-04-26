@@ -1,4 +1,9 @@
+html, body {
+	height: 100%;
+}
 body {
+	display: flex;
+	flex-direction: column;
 	margin: 0;
 	font-family: Arial, Helvetica, sans-serif;
 }
@@ -17,6 +22,7 @@ header {
 	header {
 		flex-direction: column;
 		align-items: center;
+		height: 10em;
 	}
 }
 
@@ -40,4 +46,94 @@ header {
 .logo {
 	text-decoration: none;
 	color: #3e5154;
+}
+
+footer {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	left: 0;
+	bottom: 0;
+	width: 100%;
+	background-color: #b0d6da;
+	height: 6vh;
+}
+
+.webcam-container {
+	height: 100%;
+	display: flex;
+	align-items: center;
+	flex-direction: column;
+}
+#video, #picture-img, #picture-canvas {
+	width: 640px;
+	height: 480px;
+	margin-top: 8em;
+	border: 2px solid black;
+}
+#video {
+	display: block;
+}
+#picture-img {
+	display: none;
+}
+@media screen and (max-width: 700px) {
+	#video, #picture-img {
+		width: 480px;
+		height: 360px;
+		margin-top: 4em;
+	}
+}
+@media screen and (max-width: 500px) {
+	#video, #picture-img {
+		width: 360px;
+		height: 270px;
+		margin-top: 4em;
+	}
+}
+@media screen and (max-width: 400px) {
+	#video, #picture-img {
+		width: 312px;
+		height: 234px;
+		margin-top: 4em;
+	}
+}
+#take-picture-button {
+	width: 10em;
+	height: 3.5em;
+	font-size: 0.8em;
+	padding-left: 0.5em;
+	border: none;
+	background-color: #b0edf2;
+	cursor: pointer;
+	color: #626a6b;
+	box-shadow: 0 1px 4px rgba(0, 0, 0, .6);
+	transition: background-color .3s;
+	margin-top: 10px;
+	outline: none;
+}
+#take-picture-button:hover {
+	background-color: #88dae0;
+}
+#take-picture-button:active {
+	border: none;
+	background-color: #9cd2d6;
+}
+#take-picture-button:focus {
+	border: none;
+}
+#picture-canvas {
+	display: none;
+	border: 2px solid black;
+}
+
+.carousel-container {
+	height: 16em;
+	width: 40.4em;
+	overflow-x: scroll;
+	overflow-y: hidden;
+	white-space: nowrap;
+}
+.img-carousel {
+	width: 8em;
 }
