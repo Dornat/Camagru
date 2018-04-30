@@ -141,18 +141,19 @@ footer {
 .carousel-container {
 	display: flex;
 	align-items: center;
-	height: 15em;
+	height: 18em;
 	width: 40.4em;
 	margin-top: 3em;
 	overflow-x: scroll;
 	overflow-y: hidden;
 	white-space: nowrap;
 }
-.img-carousel {
-	width: 8em;
-	cursor: pointer;
+.carousel-container-wrapper {
+	display: flex;
+	flex-direction: column;
 }
 .img-wrapper {
+	position: relative;
 	display: flex;
 	align-items: center;
 	width: 8em;
@@ -162,4 +163,28 @@ footer {
 }
 .img-wrapper:hover {
 	opacity: 0.8;
+}
+.img-carousel {
+	width: 8em;
+	cursor: pointer;
+}
+.icon-wrapper {
+	visibility: hidden;
+	display: flex;
+	justify-content: space-around;
+}
+
+.size-icon {
+	cursor: pointer;
+	padding: 8px;
+	border-radius: 3px;
+}
+.size-icon:active {
+	color: #dcd7d7;
+}
+.rotated-icon-40 {
+	transform: rotate(40deg);
+}
+.rotated-icon-230 {
+	transform: rotate(230deg);
 }

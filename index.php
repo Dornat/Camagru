@@ -4,6 +4,7 @@
 		<title>Camagru</title>
 		<link rel="stylesheet" href="css/style.css">
 		<link rel="stylesheet" href="css/login_form.css">
+		<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.10/css/all.css" integrity="sha384-+d0P83n9kaQMCwj8F4RJB66tzIwOKmrdb46+porD/OvrJ+37WqIM7UoBtwHO6Nlg" crossorigin="anonymous">
 	</head>
 	<body>
 		<?php require_once "header.php"; ?>
@@ -17,8 +18,14 @@
 			<button id="take-picture-button">Shoot</button>
 
 			<div class="carousel-container">
-				<div class="img-wrapper">
-					<img id="obama" class="img-carousel" src="img/580b57fbd9996e24bc43be4e.png">
+				<div class="carousel-container-wrapper">
+					<div class="img-wrapper">
+						<img id="obama" class="img-carousel" src="img/580b57fbd9996e24bc43be4e.png">
+					</div>
+					<div class="icon-wrapper">
+						<i id="obama" class="far fa-arrow-alt-circle-right size-icon rotated-icon-230"></i>
+						<i id="obama" class="far fa-arrow-alt-circle-right size-icon rotated-icon-40"></i>
+					</div>
 				</div>
 				<div class="img-wrapper">
 					<img id="trump" class="img-carousel" src="img/580b57fbd9996e24bc43be5c.png">

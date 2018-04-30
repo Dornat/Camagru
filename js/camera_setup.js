@@ -21,6 +21,7 @@ if (hasGetUserMedia()) {
 			if (this.style.backgroundColor) {
 				this.style.backgroundColor = "";
 				parentDiv.removeChild(document.getElementById(this.getElementsByTagName('img')[0].id));
+				this.nextElementSibling.setAttribute("style", "visibility: hidden");
 			} else {
 				this.style.backgroundColor = "#eef0f1";
 				let newImg = document.createElement('img');
@@ -28,10 +29,16 @@ if (hasGetUserMedia()) {
 				newImg.setAttribute("class", "template-img");
 				newImg.setAttribute("id", this.getElementsByTagName('img')[0].id);
 				parentDiv.appendChild(newImg);
+				//console.log(this.nextElementSibling);
+				this.nextElementSibling.setAttribute("style", "visibility: visible");
+				//this.querySelector('.icon-wrapper').style.visibility = visible;
 				//console.log(this.getElementsByTagName('img')[0]);
 				//canvas.getContext("2d").drawImage(this.innerHtml, 0, 0);
 			}
 		});
+		//img.addEventListener('mouseover', function () {
+		//	console.log('hover!');
+		//});
 	}
 
 	button.onclick = function() {
