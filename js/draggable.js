@@ -43,9 +43,9 @@ function onMouseMove(e) {
 		var e = window.event;
 	}
 	dragElement.style.left = (offsetX + e.clientX - startX) + 'px';
-	console.log('e.clientX: ' + e.clientX);
+	//console.log('e.clientX: ' + e.clientX);
 	dragElement.style.top = (offsetY + e.clientY - startY) + 'px';
-	console.log('e.clientY: ' + e.clientY);
+	//console.log('e.clientY: ' + e.clientY);
 }
 
 function onMouseUp(e) {

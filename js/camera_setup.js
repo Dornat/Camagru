@@ -61,8 +61,16 @@ function takeASnapshot(button, canvas) {
 		canvas.width = video.videoWidth;
 		canvas.height = video.videoHeight;
 		canvas.getContext("2d").drawImage(video, 0, 0);
-		//var drownImg = document.getElementById("firstimg");
+		//var drownImg = document.getElementById("obama");
 		//canvas.getContext("2d").drawImage(drownImg, 0, 0);
+		var drawnImg = document.getElementsByClassName("template-img");
+		for (let i = 0; drawnImg[i]; i++) {
+			canvas.getContext("2d").drawImage(
+				drawnImg[i],
+				drawnImg[i].style.left.slice(0, -2), drawnImg[i].style.top.slice(0, -2),
+				drawnImg[i].width, drawnImg[i].height
+			);
+		}
 		putAssembledImageToSrcOfImgTag();
 		setDisplayStylesToCanvasAndVideoTags("block", "none");
 		button.innerHTML = "Try again";

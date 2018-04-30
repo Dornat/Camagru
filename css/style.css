@@ -71,6 +71,7 @@ footer {
 	margin: 8em 0 2em;
 	border: 2px solid black;
 	position: relative;
+	overflow: hidden;
 }
 .template-img {
 	position: absolute;
