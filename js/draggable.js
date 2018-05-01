@@ -22,7 +22,6 @@ function onMouseDown(e) {
 		startY = e.clientY;
 		offsetX = extractNumber(target.style.left);
 		offsetY = extractNumber(target.style.top);
-		oldZIndex = target.style.zIndex;
 		dragElement = target;
 		document.onmousemove = onMouseMove;
 		document.body.focus();

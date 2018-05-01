@@ -77,7 +77,6 @@ footer {
 	position: absolute;
 	top: 0;
 	left: 0;
-	width: 242px;
 	cursor: move;
 }
 #video, #picture-img, #picture-canvas {
@@ -91,27 +90,47 @@ footer {
 	display: none;
 }
 @media screen and (max-width: 700px) {
-	#video, #picture-img {
+	#video, #picture-img, #webcam-wrapper, #picture-canvas {
 		width: 480px;
 		height: 360px;
+	}
+	#webcam-wrapper {
 		margin-top: 4em;
+	}
+	.carousel-container, .picture-button-container {
+		width: 480px !important;
 	}
 }
 @media screen and (max-width: 500px) {
-	#video, #picture-img {
+	#video, #picture-img, #webcam-wrapper, #picture-canvas {
 		width: 360px;
 		height: 270px;
-		margin-top: 4em;
+	}
+	.carousel-container, .picture-button-container {
+		width: 360px !important;
+	}
+	.take-picture-button {
+		width: 8em !important;
 	}
 }
 @media screen and (max-width: 400px) {
-	#video, #picture-img {
+	#video, #picture-img, #webcam-wrapper, #picture-canvas {
 		width: 312px;
 		height: 234px;
-		margin-top: 4em;
+	}
+	.carousel-container, .picture-button-container {
+		width: 312px !important;
+	}
+	.take-picture-button {
+		width: 6em !important;
 	}
 }
-#take-picture-button {
+.picture-button-container {
+	display: flex;
+	justify-content: space-around;
+	width: 640px;
+}
+.take-picture-button {
 	width: 10em;
 	height: 3.5em;
 	font-size: 0.8em;
@@ -123,15 +142,17 @@ footer {
 	box-shadow: 0 1px 4px rgba(0, 0, 0, .6);
 	transition: background-color .3s;
 	outline: none;
+	transition: visibility 500ms linear 900ms, opacity 500ms;
+	opacity: 1;
 }
-#take-picture-button:hover {
+.take-picture-button:hover {
 	background-color: #88dae0;
 }
-#take-picture-button:active {
+.take-picture-button:active {
 	border: none;
 	background-color: #9cd2d6;
 }
-#take-picture-button:focus {
+.take-picture-button:focus {
 	border: none;
 }
 #picture-canvas {
@@ -142,11 +163,11 @@ footer {
 	display: flex;
 	align-items: center;
 	height: 18em;
-	width: 40.4em;
-	margin-top: 3em;
+	width: 640px;
 	overflow-x: scroll;
 	overflow-y: hidden;
 	white-space: nowrap;
+	margin-top: 1em;
 }
 .carousel-container-wrapper {
 	display: flex;
@@ -178,6 +199,7 @@ footer {
 	cursor: pointer;
 	padding: 8px;
 	border-radius: 3px;
+	font-size: 20px;
 }
 .size-icon:active {
 	color: #dcd7d7;
