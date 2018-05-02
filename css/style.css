@@ -109,7 +109,7 @@ footer {
 	.carousel-container, .picture-button-container {
 		width: 360px !important;
 	}
-	.take-picture-button {
+	.take-picture-button, .taken-picture-button {
 		width: 8em !important;
 	}
 }
@@ -121,13 +121,12 @@ footer {
 	.carousel-container, .picture-button-container {
 		width: 312px !important;
 	}
-	.take-picture-button {
+	.take-picture-button, .taken-picture-button {
 		width: 6em !important;
 	}
 }
 .picture-button-container {
 	display: flex;
-	justify-content: space-around;
 	width: 640px;
 }
 .take-picture-button {
@@ -154,6 +153,21 @@ footer {
 }
 .take-picture-button:focus {
 	border: none;
+}
+.taken-picture-button {
+	width: 10em;
+	height: 3.5em;
+	font-size: 0.8em;
+	padding-left: 0.5em;
+	border: none;
+	background-color: #fff;
+	cursor: not-allowed;
+	color: #626a6b;
+	box-shadow: 0 1px 1px rgba(0, 0, 0, .3);
+	transition: background-color .3s;
+	outline: none;
+	transition: visibility 500ms linear 900ms, opacity 500ms;
+	opacity: 1;
 }
 #picture-canvas {
 	display: none;

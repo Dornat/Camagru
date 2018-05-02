@@ -62,7 +62,6 @@ if (hasGetUserMedia()) {
 			let clickedImg = parentDiv.querySelector("#" + this.id);
 			let width = extractNumber(clickedImg.style.width) - 5;
 			clickedImg.style.width = width + 'px';
-			console.log(extractNumber(clickedImg.style.width));
 		});
 	}
 
@@ -99,7 +98,6 @@ function takeASnapshot(button, canvas) {
 				let newWidth = drawnImg[i].width * 1.3296703297;
 				let newLeft = drawnImg[i].style.left.slice(0, -2) * 1.3296703297;
 				let newTop = drawnImg[i].style.top.slice(0, -2) * 1.3296703297;
-				console.log(newLeft);
 				canvas.getContext("2d").drawImage(
 					drawnImg[i],
 					newLeft, newTop,
@@ -109,7 +107,6 @@ function takeASnapshot(button, canvas) {
 				let newWidth = drawnImg[i].width * 1.7794117647;
 				let newLeft = drawnImg[i].style.left.slice(0, -2) * 1.7794117647;
 				let newTop = drawnImg[i].style.top.slice(0, -2) * 1.7794117647;
-				console.log(newLeft);
 				canvas.getContext("2d").drawImage(
 					drawnImg[i],
 					newLeft, newTop,
@@ -119,7 +116,6 @@ function takeASnapshot(button, canvas) {
 				let newWidth = drawnImg[i].width * 2.0508474576;
 				let newLeft = drawnImg[i].style.left.slice(0, -2) * 2.0508474576;
 				let newTop = drawnImg[i].style.top.slice(0, -2) * 2.0508474576;
-				console.log(newLeft);
 				canvas.getContext("2d").drawImage(
 					drawnImg[i],
 					newLeft, newTop,
@@ -137,15 +133,20 @@ function takeASnapshot(button, canvas) {
 		var resultImgTag = document.getElementById("picture-img");
 		resultImgTag.src = canvas.toDataURL("image/png");
 
+		document.getElementById('picture-button-container')
+			.setAttribute('style', 'justify-content: space-around;');
 		setHrefToDuwnloadButton(resultImgTag.src);
 		setDisplayStylesToCanvasAndVideoTags("block", "none");
-		setVisibilityToButtons('visible');
+		setDisplayStyleToButtons('block');
 		setOpacityToButtons(1);
 		button.innerHTML = "Try again";
 	} else if (button.innerHTML == "Try again") {
+		document.getElementById('picture-button-container')
+			.setAttribute('style', 'justify-content: center;');
 		setDisplayStylesToCanvasAndVideoTags("none", "block");
-		setVisibilityToButtons('hidden');
+		setDisplayStyleToButtons('none');
 		setOpacityToButtons(0);
+		setRoutinesToSaveButton('take-picture-button', 'Save to Gallery');
 		button.innerHTML = "Shoot";
 	}
 
@@ -159,11 +160,11 @@ function takeASnapshot(button, canvas) {
 		video.style.display = videoStyle;
 	}
 
-	function setVisibilityToButtons(visibilityValue) {
+	function setDisplayStyleToButtons(displayValue) {
 		let downloadBtn = document.getElementById('download-button');
 		let saveToGalleryBtn = document.getElementById('save-to-gallery-button');
-		downloadBtn.setAttribute('style', 'visibility: ' + visibilityValue + ';');
-		saveToGalleryBtn.setAttribute('style', 'visibility: ' + visibilityValue + ';');
+		downloadBtn.setAttribute('style', 'display: ' + displayValue + ';');
+		saveToGalleryBtn.setAttribute('style', 'display: ' + displayValue + ';');
 	}
 
 	function setOpacityToButtons(opacity) {
@@ -171,5 +172,40 @@ function takeASnapshot(button, canvas) {
 		let saveToGalleryBtn = document.getElementById('save-to-gallery-button');
 		downloadBtn.style.opacity = opacity;
 		saveToGalleryBtn.style.opacity = opacity;
+	}
+
+	function setRoutinesToSaveButton(className, text) {
+		let btn = document.getElementById('save-to-gallery-button');
+		btn.setAttribute('class', className);
+		btn.innerHTML = text;
+		btn.removeAttribute('disabled');
+	}
+}
+
+function saveToGalleryRoutine() {
+	changeBtnAppearance();
+	loadXMLToPhp();
+
+	function changeBtnAppearance() {
+		let btn = document.getElementById('save-to-gallery-button');
+		btn.setAttribute('class', 'taken-picture-button');
+		btn.innerHTML = 'Saved';
+		btn.setAttribute('disabled', 'disabled');
+	}
+
+	function loadXMLToPhp() {
+		let xmlhttp = new XMLHttpRequest();
+		let imgSrc = document.getElementById('picture-img').src;
+
+		xmlhttp.onreadystatechange = function () {
+			if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
+				console.log(xmlhttp.responseText);
+			}
+		}
+
+		let params = 'img_src=' + imgSrc;
+		xmlhttp.open('POST', '../collage_image_processing.php', true);
+		xmlhttp.setRequestHeader('content-type', 'application/x-www-form-urlencoded');
+		xmlhttp.send(params);
 	}
 }

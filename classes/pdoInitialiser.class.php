@@ -25,6 +25,7 @@ class PdoInitialiser {
 			$this->createDbIfNotExists($pdo);
 			$this->useDb($pdo);
 			$this->createUserTableIfNotExists($pdo);
+			$this->createCollageImagesTableIfNotExists($pdo);
 			return $pdo;
 		} catch (PDOException $e) {
 			printf("Connection to database wasn't established: %s", $e->getMessage());
@@ -43,12 +44,21 @@ class PdoInitialiser {
 
 	private function createUserTableIfNotExists($pdo) {
 		$queryStatement = "CREATE TABLE IF NOT EXISTS `users` (
-							`id` INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
-							`login` varchar(32) NOT NULL,
-							`email` varchar(255) NOT NULL,
-							`password` varchar(255) NOT NULL,
-							`is_verified` ENUM(\"false\", \"true\") DEFAULT \"false\" NOT NULL,
-							`verif_code` varchar(255) NOT NULL)";
+			`id` INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
+			`login` varchar(32) NOT NULL,
+			`email` varchar(255) NOT NULL,
+			`password` varchar(255) NOT NULL,
+			`is_verified` ENUM(\"false\", \"true\") DEFAULT \"false\" NOT NULL,
+			`verif_code` varchar(255) NOT NULL)";
+		$pdo->query($queryStatement);
+	}
+
+	private function createCollageImagesTableIfNotExists($pdo) {
+		$queryStatement = "CREATE TABLE IF NOT EXISTS `collage_images` (
+			`id` INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
+			`user_id` INT NOT NULL,
+			`img_path` varchar(255) NOT NULL
+		)";
 		$pdo->query($queryStatement);
 	}
 }

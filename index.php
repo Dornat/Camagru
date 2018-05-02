@@ -16,10 +16,10 @@
 				<canvas id="picture-canvas"></canvas>
 			</div>
 			<img id="picture-img" src="">
-			<div class="picture-button-container">
-				<a id="download-button-href" href="sign_up_page.php" download="awesome_pic.png"><button id="download-button" class="take-picture-button" style="visibility: hidden;">Download</button></a>
+			<div id="picture-button-container" class="picture-button-container" style="justify-content: center;">
+				<a id="download-button-href" href="sign_up_page.php" download="awesome_pic.png" style="text-decoration: none;"><button id="download-button" class="take-picture-button" style="display: none;">Download</button></a>
 				<button id="take-picture-button" class="take-picture-button">Shoot</button>
-				<button id="save-to-gallery-button" class="take-picture-button" style="visibility: hidden;">Save to Gallery</button>
+				<button id="save-to-gallery-button" class="take-picture-button" style="display: none;" onClick="saveToGalleryRoutine()">Save to Gallery</button>
 			</div>
 
 			<div class="carousel-container">
