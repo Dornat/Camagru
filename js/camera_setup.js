@@ -88,7 +88,7 @@ function handleError(error) {
 function takeASnapshot(button, canvas) {
 	const video = document.getElementById("video");
 
-	if (button.innerHTML == "Shoot") {
+	if (button.innerHTML == "Shoot" && canvasHaseSomeImg()) {
 		canvas.width = video.width;
 		canvas.height = video.height;
 		canvas.getContext("2d").drawImage(video, 0, 0);
@@ -150,6 +150,11 @@ function takeASnapshot(button, canvas) {
 		button.innerHTML = "Shoot";
 	}
 
+	function canvasHaseSomeImg() {
+		let parentDiv = document.getElementById('webcam-wrapper');
+		return parentDiv.getElementsByTagName('img')[0];
+	}
+
 	function setHrefToDuwnloadButton(href) {
 		let downloadBtnHref = document.getElementById('download-button-href');
 		downloadBtnHref.href = href;
@@ -185,6 +190,7 @@ function takeASnapshot(button, canvas) {
 function saveToGalleryRoutine() {
 	changeBtnAppearance();
 	loadXMLToPhp();
+	resetLatestUserImg();
 
 	function changeBtnAppearance() {
 		let btn = document.getElementById('save-to-gallery-button');
@@ -204,7 +210,7 @@ function saveToGalleryRoutine() {
 		}
 
 		let params = 'img_src=' + imgSrc;
-		xmlhttp.open('POST', '../collage_image_processing.php', true);
+		xmlhttp.open('POST', '../collage_image_processing.php', false);
 		xmlhttp.setRequestHeader('content-type', 'application/x-www-form-urlencoded');
 		xmlhttp.send(params);
 	}

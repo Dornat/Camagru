@@ -57,13 +57,33 @@ footer {
 	width: 100%;
 	background-color: #b0d6da;
 	height: 6vh;
+	text-align: center;
 }
 
 .webcam-container {
 	height: 100%;
 	display: flex;
-	align-items: center;
-	flex-direction: column;
+	justify-content: center;
+}
+@media screen and (max-width: 1000px) {
+	html, body {
+		height: auto;
+	}
+	.webcam-container {
+		flex-direction: column;
+		align-items: center;
+	}
+	#webcam-container-right {
+		margin: 1em 0 1em;
+	}
+	.user-gallery-container {
+		overflow-x: scroll !important;
+		overflow-y: hidden !important;
+		flex-direction: row !important;
+		margin-top: 0 !important;
+		width: 640px !important;
+		height: 18em !important;
+	}
 }
 #webcam-wrapper {
 	width: 640px;
@@ -97,7 +117,7 @@ footer {
 	#webcam-wrapper {
 		margin-top: 4em;
 	}
-	.carousel-container, .picture-button-container {
+	.carousel-container, .picture-button-container, .user-gallery-container {
 		width: 480px !important;
 	}
 }
@@ -106,7 +126,7 @@ footer {
 		width: 360px;
 		height: 270px;
 	}
-	.carousel-container, .picture-button-container {
+	.carousel-container, .picture-button-container, .user-gallery-container {
 		width: 360px !important;
 	}
 	.take-picture-button, .taken-picture-button {
@@ -114,11 +134,14 @@ footer {
 	}
 }
 @media screen and (max-width: 400px) {
+	html, body {
+		height: 100%;
+	}
 	#video, #picture-img, #webcam-wrapper, #picture-canvas {
 		width: 312px;
 		height: 234px;
 	}
-	.carousel-container, .picture-button-container {
+	.carousel-container, .picture-button-container, .user-gallery-container {
 		width: 312px !important;
 	}
 	.take-picture-button, .taken-picture-button {
@@ -207,6 +230,22 @@ footer {
 	visibility: hidden;
 	display: flex;
 	justify-content: space-around;
+}
+
+.user-gallery-container {
+	display: flex;
+	align-items: center;
+	height: 480px;
+	width: 318px;
+	overflow-x: hidden;
+	overflow-y: scroll;
+	white-space: nowrap;
+	margin-top: 8.15em;
+	flex-direction: column;
+}
+.user-gallery-img {
+	width: 15em;
+	padding: 0 0 1em;
 }
 
 .size-icon {

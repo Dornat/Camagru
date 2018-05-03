@@ -11,6 +11,7 @@ $decodedImg = base64_decode($rawImgSrc);
 
 file_put_contents('user_collages/img' . getImgNumber($pdo) . '.png', $decodedImg);
 addImgToDb($pdo);
+echo 'img added';
 
 function addImgToDb($pdo) {
 	$imgNumber = getImgNumber($pdo);

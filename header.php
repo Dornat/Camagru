@@ -16,7 +16,7 @@ if (isset($_POST['logout'])) {
 	</div>
 	<?php if (userNameIsSet()) { ?>
 	<div class="user-button-container">
-		<a href="user_profile_page.php"><button class="user-button"><?php echo $_SESSION['userName']; ?></button></a>
+		<a href="user_profile_page.php"><button class="user-button"><i class="fas fa-user"></i> <?php echo $_SESSION['userName']; ?></button></a>
 		<a href="logout.php"><button class="user-button">Logout</button></a>
 	</div>
 	<?php } else { include "login_form.php"; } ?>
