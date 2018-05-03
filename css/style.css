@@ -84,6 +84,9 @@ footer {
 		width: 640px !important;
 		height: 18em !important;
 	}
+	.user-gallery-img {
+		padding: 0 1em 0 0 !important;
+	}
 }
 #webcam-wrapper {
 	width: 640px;
@@ -243,9 +246,31 @@ footer {
 	margin-top: 8.15em;
 	flex-direction: column;
 }
+.user-image-container {
+	position: relative;
+}
 .user-gallery-img {
 	width: 15em;
 	padding: 0 0 1em;
+}
+.download-image-from-gallery, .trash-image-from-gallery {
+	position: absolute;
+    color: rgb(110, 180, 185, 0.6);
+    font-size: 30px;
+    top: 140px;
+    cursor: pointer;
+}
+.download-image-from-gallery:hover, .trash-image-from-gallery:hover {
+    color: rgb(138, 144, 144, 0.6);
+}
+.download-image-from-gallery:active, .trash-image-from-gallery:active {
+    color: rgb(77, 111, 113, 0.6);
+}
+.download-image-from-gallery {
+	left: 20px;
+}
+.trash-image-from-gallery {
+	right: 20px;
 }
 
 .size-icon {

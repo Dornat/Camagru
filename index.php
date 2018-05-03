@@ -513,5 +513,6 @@
 		<script src="js/camera_setup.js"> </script>
 		<script src="js/draggable.js"> </script>
 		<script src="js/print_user_gallery.js"> </script>
+		<script src="js/user_gallery_options.js"> </script>
 	</body>
 </html>

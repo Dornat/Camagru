@@ -190,7 +190,6 @@ function takeASnapshot(button, canvas) {
 function saveToGalleryRoutine() {
 	changeBtnAppearance();
 	loadXMLToPhp();
-	resetLatestUserImg();
 
 	function changeBtnAppearance() {
 		let btn = document.getElementById('save-to-gallery-button');
@@ -205,12 +204,12 @@ function saveToGalleryRoutine() {
 
 		xmlhttp.onreadystatechange = function () {
 			if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
-				console.log(xmlhttp.responseText);
+				resetLatestUserImg();
 			}
 		}
 
 		let params = 'img_src=' + imgSrc;
-		xmlhttp.open('POST', '../collage_image_processing.php', false);
+		xmlhttp.open('POST', '../collage_image_processing.php', true);
 		xmlhttp.setRequestHeader('content-type', 'application/x-www-form-urlencoded');
 		xmlhttp.send(params);
 	}
