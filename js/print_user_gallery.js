@@ -5,8 +5,8 @@ function printUserGallery() {
 
 	xmlhttp.onreadystatechange = function () {
 		if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
-			var imgArr = JSON.parse(xmlhttp.responseText);
-			fillUserGallery(imgArr);
+			var arrayOfImgSources = JSON.parse(xmlhttp.responseText);
+			fillUserGallery(arrayOfImgSources);
 		}
 	}
 
@@ -15,29 +15,47 @@ function printUserGallery() {
 	xmlhttp.setRequestHeader('content-type', 'application/x-www-form-urlencoded');
 	xmlhttp.send(randNum);
 
-	function fillUserGallery(imgArr) {
+	function fillUserGallery(arrayOfImgSources) {
 		let parentDiv = document.getElementsByClassName('user-gallery-container')[0];
-		for (let i = 0; i < imgArr.length; i++) {
+		for (let i = 0; i < arrayOfImgSources.length; i++) {
+
 			let divUserImgContainer = document.createElement('div');
 			divUserImgContainer.setAttribute('class', 'user-image-container');
+
 			let divIconsContainer = document.createElement('div');
 			divIconsContainer.setAttribute('class', 'user-image-icons-container');
+
+			let downloadIconHref = document.createElement('a');
+			downloadIconHref.setAttribute(
+				'href', arrayOfImgSources[i]
+			);
+			downloadIconHref.setAttribute(
+				'download', 'awesome_pic.png'
+			);
+
 			let downloadIcon = document.createElement('i');
 			downloadIcon.setAttribute(
 				'class', 'fas fa-download download-image-from-gallery'
 			);
+
+			downloadIconHref.appendChild(downloadIcon);
+
 			let trashIcon = document.createElement('i');
 			trashIcon.setAttribute(
 				'class', 'fas fa-trash-alt trash-image-from-gallery'
 			);
 			trashIcon.setAttribute(
-				'onClick', 'deleteImgFromDb(\'' + imgArr[i] + '\')'
+				'onClick', 'deleteImgFromDb(\'' + arrayOfImgSources[i] + '\')'
 			);
-			divIconsContainer.appendChild(downloadIcon);
+			divIconsContainer.appendChild(downloadIconHref);
 			divIconsContainer.appendChild(trashIcon);
+
 			let newImg = document.createElement('img');
-			newImg.src = imgArr[i];
+			newImg.src = arrayOfImgSources[i];
 			newImg.setAttribute('class', 'user-gallery-img');
+			newImg.setAttribute(
+				'id', arrayOfImgSources[i]
+			);
 			divUserImgContainer.appendChild(newImg);
 			divUserImgContainer.appendChild(divIconsContainer);
 			parentDiv.appendChild(divUserImgContainer);
@@ -50,8 +68,8 @@ function resetLatestUserImg() {
 
 	xmlhttp.onreadystatechange = function () {
 		if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
-			var imgPath = xmlhttp.responseText;
-			addNewLatestImg(imgPath);
+			var imgSrc = xmlhttp.responseText;
+			addNewLatestImg(imgSrc);
 		}
 	}
 
@@ -60,7 +78,7 @@ function resetLatestUserImg() {
 	xmlhttp.setRequestHeader('content-type', 'application/x-www-form-urlencoded');
 	xmlhttp.send(randNum);
 
-	function addNewLatestImg(imgPath) {
+	function addNewLatestImg(imgSrc) {
 		let parentDiv = document.getElementsByClassName('user-gallery-container')[0];
 		let divUserImgContainer = document.createElement('div');
 		divUserImgContainer.setAttribute('class', 'user-image-container');
@@ -75,13 +93,16 @@ function resetLatestUserImg() {
 			'class', 'fas fa-trash-alt trash-image-from-gallery'
 		);
 		trashIcon.setAttribute(
-			'onClick', 'deleteImgFromDb(\'' + imgPath + '\')'
+			'onClick', 'deleteImgFromDb(\'' + imgSrc + '\')'
 		);
 		divIconsContainer.appendChild(downloadIcon);
 		divIconsContainer.appendChild(trashIcon);
 		let newImg = document.createElement('img');
-		newImg.src = imgPath;
+		newImg.src = imgSrc;
 		newImg.setAttribute('class', 'user-gallery-img');
+		newImg.setAttribute(
+			'id', imgSrc
+		);
 		divUserImgContainer.appendChild(newImg);
 		divUserImgContainer.appendChild(divIconsContainer);
 		parentDiv.insertBefore(divUserImgContainer, parentDiv.childNodes[0]);

@@ -87,6 +87,9 @@ footer {
 	.user-gallery-img {
 		padding: 0 1em 0 0 !important;
 	}
+	.trash-image-from-gallery {
+		right: 35px !important;
+	}
 }
 #webcam-wrapper {
 	width: 640px;
