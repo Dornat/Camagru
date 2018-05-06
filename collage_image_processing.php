@@ -9,18 +9,17 @@ $rawImgSrc = preg_replace(
 $rawImgSrc = str_replace(' ', '+', $rawImgSrc);
 $decodedImg = base64_decode($rawImgSrc);
 
-file_put_contents('user_collages/img' . getImgNumber($pdo) . '.png', $decodedImg);
+file_put_contents('user_collages/' . time() . '.png', $decodedImg);
 addImgToDb($pdo);
 echo 'img added';
 
 function addImgToDb($pdo) {
-	$imgNumber = getImgNumber($pdo);
 	$userId = getUserId($pdo);
 	$statement = "INSERT INTO `collage_images` (`user_id`, `img_path`)
 		VALUES (?, ?)";
 	$preparedStatement = $pdo->prepare($statement);
 	$preparedStatement->execute([
-		$userId, 'user_collages/img' . $imgNumber . '.png'
+		$userId, 'user_collages/' . time() . '.png'
 	]);
 }
 

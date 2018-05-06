@@ -84,10 +84,21 @@ function resetLatestUserImg() {
 		divUserImgContainer.setAttribute('class', 'user-image-container');
 		let divIconsContainer = document.createElement('div');
 		divIconsContainer.setAttribute('class', 'user-image-icons-container');
+
+		let downloadIconHref = document.createElement('a');
+		downloadIconHref.setAttribute(
+			'href', imgSrc
+		);
+		downloadIconHref.setAttribute(
+			'download', 'awesome_pic.png'
+		);
+
 		let downloadIcon = document.createElement('i');
 		downloadIcon.setAttribute(
 			'class', 'fas fa-download download-image-from-gallery'
 		);
+
+		downloadIconHref.appendChild(downloadIcon);
 		let trashIcon = document.createElement('i');
 		trashIcon.setAttribute(
 			'class', 'fas fa-trash-alt trash-image-from-gallery'
@@ -95,7 +106,7 @@ function resetLatestUserImg() {
 		trashIcon.setAttribute(
 			'onClick', 'deleteImgFromDb(\'' + imgSrc + '\')'
 		);
-		divIconsContainer.appendChild(downloadIcon);
+		divIconsContainer.appendChild(downloadIconHref);
 		divIconsContainer.appendChild(trashIcon);
 		let newImg = document.createElement('img');
 		newImg.src = imgSrc;

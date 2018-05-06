@@ -156,6 +156,7 @@ function takeASnapshot(button, canvas) {
 		setDisplayStyleToButtons('block');
 		setOpacityToButtons(1);
 		button.innerHTML = "Try again";
+		document.getElementById('upload-file-label').setAttribute('style', 'display: none;');
 	} else if (button.innerHTML == "Try again") {
 		document.getElementById('picture-button-container')
 			.setAttribute('style', 'justify-content: center;');
@@ -164,6 +165,7 @@ function takeASnapshot(button, canvas) {
 		setOpacityToButtons(0);
 		setRoutinesToSaveButton('take-picture-button', 'Save to Gallery');
 		button.innerHTML = "Shoot";
+		document.getElementById('upload-file-label').setAttribute('style', 'display: block;');
 	}
 
 	function canvasHaseSomeImg() {
