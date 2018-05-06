@@ -1,4 +1,4 @@
 *.swp
 .DS_Store
 tags
-user_collages/
+user_collages/*.png

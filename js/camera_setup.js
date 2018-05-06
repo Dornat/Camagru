@@ -91,11 +91,12 @@ function takeASnapshot(button, canvas) {
 	if (button.innerHTML == "Shoot" && canvasHaseSomeImg()) {
 		canvas.width = video.width;
 		canvas.height = video.height;
-		if (video.hasAttribute('poster')) {
+		if (document.getElementById('video').tagName == 'IMG') {
+			var backgroundImg = document.getElementById('video');
 			var videoCustomImage = new Image();
 			var relativeLeftMargin;
 			var relativeTopMargin;
-			videoCustomImage.src = video.poster;
+			videoCustomImage.src = backgroundImg.src;
 			var savedCustomImgHeight = videoCustomImage.height;
 			var savedCustomImgWidth = videoCustomImage.width;
 			setRelativeDimentions();
@@ -196,7 +197,13 @@ function takeASnapshot(button, canvas) {
 
 	function canvasHaseSomeImg() {
 		let parentDiv = document.getElementById('webcam-wrapper');
-		return parentDiv.getElementsByTagName('img')[0];
+		let canvasImages = parentDiv.getElementsByTagName('img');
+		if (canvasImages[0] != null) {
+			if (canvasImages[0].id == 'video') {
+				return canvasImages[1];
+			}
+		}
+		return canvasImages[0];
 	}
 
 	function setHrefToDuwnloadButton(href) {
@@ -232,8 +239,18 @@ function takeASnapshot(button, canvas) {
 }
 
 function saveToGalleryRoutine() {
-	changeBtnAppearance();
-	loadXMLToPhp();
+	if (pictureWasTaken()) {
+		changeBtnAppearance();
+		loadXMLToPhp();
+	}
+
+	function pictureWasTaken() {
+		let canvasPicture = document.getElementById('picture-canvas');
+		if (canvasPicture.style.display == 'block') {
+			return true;
+		}
+		return false;
+	}
 
 	function changeBtnAppearance() {
 		let btn = document.getElementById('save-to-gallery-button');

@@ -19,18 +19,45 @@ function deleteImgFromUserGallery(imgSrc) {
 }
 
 function previewFile() {
-	var preview = document.getElementById('test-img'); //selects the query named img
-	var file    = document.querySelector('input[type=file]').files[0]; //sames as here
-	var reader  = new FileReader();
+	var newImg = document.createElement('img');
+	var parentDiv = document.getElementById('webcam-wrapper');
+	var file = document.querySelector('input[type=file]').files[0];
+	var reader = new FileReader();
 
 	reader.onloadend = function () {
-		preview.setAttribute('src', reader.result);
+		let videoTag = document.getElementById('video');
+		var savedWidth = videoTag.width;
+		var savedHeight = videoTag.height;
+		var relativeLeftMargin;
+		var relativeTopMargin;
+		parentDiv.removeChild(videoTag);
+		newImg.setAttribute('src', reader.result);
+		newImg.setAttribute('id', 'video');
+		parentDiv.appendChild(newImg);
 	}
 
 	if (file) {
-		reader.readAsDataURL(file); //reads the data as a URL
-		console.log(file);
+		reader.readAsDataURL(file);
 	} else {
 		preview.src = "";
 	}
-}	
+
+
+}
+
+//function previewFile1() {
+//	var preview = document.getElementById('test-img'); //selects the query named img
+//	var file    = document.querySelector('input[type=file]').files[0]; //sames as here
+//	var reader  = new FileReader();
+//
+//	reader.onloadend = function () {
+//		preview.setAttribute('src', reader.result);
+//	}
+//
+//	if (file) {
+//		reader.readAsDataURL(file); //reads the data as a URL
+//		console.log(file);
+//	} else {
+//		preview.src = "";
+//	}
+//}

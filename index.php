@@ -13,8 +13,8 @@
 		<div class="webcam-container">
 			<div id="webcam-container-left">
 				<div id="webcam-wrapper">
-					<!-- <video id="video" width="640" height="480" autoplay></video> -->
-					<video id="video" width="640" height="480" poster="img/5845ccd80b2a3b54fdbaecf5.png"></video>
+					<video id="video" width="640" height="480" autoplay></video>
+					<!-- <video id="video" width="640" height="480" poster="img/5845ccd80b2a3b54fdbaecf5.png"></video> -->
 					<canvas id="picture-canvas"></canvas>
 				</div>
 				<img id="picture-img" src="">
@@ -507,7 +507,6 @@
 				<div class="user-gallery-container">
 
 <input type="file" onchange="previewFile()"><br>
-<img id="test-img" src="" height="200" alt="Image preview...">
 
 				</div>
 			</div> <!-- webcam-container-right -->
