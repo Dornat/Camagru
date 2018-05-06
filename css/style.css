@@ -28,6 +28,8 @@ header {
 
 .user-button-container {
 	display: flex;
+	flex-wrap: wrap;
+	justify-content: center;
 }
 .user-button {
 	height: 100%;
@@ -47,17 +49,16 @@ header {
 	text-decoration: none;
 	color: #3e5154;
 }
-
 footer {
 	display: flex;
 	justify-content: center;
 	align-items: center;
-	left: 0;
-	bottom: 0;
 	width: 100%;
 	background-color: #b0d6da;
 	height: 6vh;
 	text-align: center;
+	flex-shrink: 0;
+	align-self: flex-end;
 }
 
 .webcam-container {
@@ -65,7 +66,7 @@ footer {
 	display: flex;
 	justify-content: center;
 }
-@media screen and (max-width: 1000px) {
+@media screen and (max-width: 1024px) {
 	html, body {
 		height: auto;
 	}

@@ -1,0 +1,30 @@
+.global-gallery-container {
+	display: flex;
+	justify-content: center;
+	flex: 1 0 auto;
+	flex-wrap: wrap;
+}
+#global-gallery-wrapper {
+	display: flex;
+	flex-wrap: wrap;
+	justify-content: center;
+	width: 75%;
+	align-content: center;
+}
+@media screen and (min-width: 1180px) {
+	#global-gallery-wrapper {
+		width: 100vh;
+	}
+}
+@media screen and (max-width: 1180px) {
+	body {
+		height: auto;
+	}
+}
+
+.global-gallery-img-container {
+	padding: 1em;
+}
+.global-gallery-img {
+	width: 16em;
+}

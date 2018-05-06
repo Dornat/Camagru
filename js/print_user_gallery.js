@@ -18,7 +18,6 @@ function printUserGallery() {
 	function fillUserGallery(arrayOfImgSources) {
 		let parentDiv = document.getElementsByClassName('user-gallery-container')[0];
 		for (let i = 0; i < arrayOfImgSources.length; i++) {
-
 			let divUserImgContainer = document.createElement('div');
 			divUserImgContainer.setAttribute('class', 'user-image-container');
 

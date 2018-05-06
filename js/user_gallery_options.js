@@ -28,8 +28,6 @@ function previewFile() {
 		let videoTag = document.getElementById('video');
 		var savedWidth = videoTag.width;
 		var savedHeight = videoTag.height;
-		var relativeLeftMargin;
-		var relativeTopMargin;
 		parentDiv.removeChild(videoTag);
 		newImg.setAttribute('src', reader.result);
 		newImg.setAttribute('id', 'video');
@@ -42,7 +40,5 @@ function previewFile() {
 
 	if (file) {
 		reader.readAsDataURL(file);
-	} else {
-		preview.src = "";
 	}
 }
