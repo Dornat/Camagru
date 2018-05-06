@@ -93,47 +93,18 @@ function takeASnapshot(button, canvas) {
 		canvas.height = video.height;
 		if (document.getElementById('video').tagName == 'IMG') {
 			var backgroundImg = document.getElementById('video');
+			console.log(backgroundImg);
 			var videoCustomImage = new Image();
 			var relativeLeftMargin;
 			var relativeTopMargin;
 			videoCustomImage.src = backgroundImg.src;
 			var savedCustomImgHeight = videoCustomImage.height;
 			var savedCustomImgWidth = videoCustomImage.width;
-			setRelativeDimentions();
 			canvas.getContext("2d").drawImage(
 				videoCustomImage,
-				relativeLeftMargin, relativeTopMargin,
-				videoCustomImage.width, videoCustomImage.height
+				0, 0,
+				backgroundImg.width, backgroundImg.height
 			);
-
-			function setRelativeDimentions() {
-				videoCustomImage.height = getRelativeHeight();
-				videoCustomImage.width = getRelativeWidth();
-				relativeLeftMargin = getRelativeLeftMargin();
-				relativeTopMargin = getRelativeTopMargin();
-			}
-			function getRelativeHeight() {
-				return savedCustomImgHeight / getCoefficient();
-			}
-			function getRelativeWidth() {
-				return savedCustomImgWidth / getCoefficient();
-			}
-			function getCoefficient() {
-				return widthIsMainDimention() == true
-					? savedCustomImgWidth / video.width
-					: savedCustomImgHeight / video.height;
-			}
-			function widthIsMainDimention() {
-				return (savedCustomImgWidth - savedCustomImgHeight) > 0
-					? true
-					: false;
-			}
-			function getRelativeLeftMargin() {
-				return Math.abs((video.width - videoCustomImage.width)) / 2;
-			}
-			function getRelativeTopMargin() {
-				return Math.abs((video.height - videoCustomImage.height)) / 2;
-			}
 		} else {
 			canvas.getContext("2d").drawImage(video, 0, 0);
 		}

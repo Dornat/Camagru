@@ -33,6 +33,10 @@ function previewFile() {
 		parentDiv.removeChild(videoTag);
 		newImg.setAttribute('src', reader.result);
 		newImg.setAttribute('id', 'video');
+		newImg.setAttribute(
+			'style',
+			'width: ' + savedWidth + 'px; height: ' + savedHeight + 'px;'
+		);
 		parentDiv.appendChild(newImg);
 	}
 
@@ -41,23 +45,4 @@ function previewFile() {
 	} else {
 		preview.src = "";
 	}
-
-
 }
-
-//function previewFile1() {
-//	var preview = document.getElementById('test-img'); //selects the query named img
-//	var file    = document.querySelector('input[type=file]').files[0]; //sames as here
-//	var reader  = new FileReader();
-//
-//	reader.onloadend = function () {
-//		preview.setAttribute('src', reader.result);
-//	}
-//
-//	if (file) {
-//		reader.readAsDataURL(file); //reads the data as a URL
-//		console.log(file);
-//	} else {
-//		preview.src = "";
-//	}
-//}
