@@ -23,8 +23,36 @@
 }
 
 .global-gallery-img-container {
-	padding: 1em;
+	box-shadow: 0 1px 4px rgba(0, 0, 0, .6);
+	margin: 1em;
 }
 .global-gallery-img {
 	width: 16em;
+}
+.like-and-comment-container {
+	height: 3em;
+	display: flex;
+	justify-content: space-around;
+	align-items: center;
+}
+.liked {
+	color: rgb(1, 180, 185, 1) !important;
+	//color: rgb(132, 172, 255, 1) !important;
+}
+.like, .comments {
+	font-size: 24px;
+	color: rgb(110, 180, 185, 0.6);
+	cursor: pointer;
+}
+.like:hover, .comments:hover {
+	color: rgb(138, 144, 144, 0.6);
+}
+.like:active, .comments:active {
+	color: rgb(77, 111, 113, 0.6);
+}
+.like-count {
+	color: #cec2c2;
+	margin-left: 12px;
+	font-size: 16px;
+	font-family: Arial, Helvetica, sans-serif;
 }
