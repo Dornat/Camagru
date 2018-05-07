@@ -11,7 +11,11 @@ if(!empty($globalGallery[0][0])) {
 		$img['liked_user_ids'] = getUserIdsWhoLikedImg($pdo, $img['id']);
 		$globalGalleryArr[] = $img;
 	}
-	$globalGalleryArr[] = array('user_id' => getUserIdFromDb($pdo));
+	if (isset($_SESSION['userName'])) {
+		$globalGalleryArr[] = array('user_id' => getUserIdFromDb($pdo));
+	} else {
+		$globalGalleryArr[] = array('user_id' => null);
+	}
 }
 
 echo json_encode($globalGalleryArr);

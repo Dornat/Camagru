@@ -4,7 +4,7 @@ xmlhttp.onreadystatechange = function () {
 	if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
 		//console.log(xmlhttp.responseText);
 		var arrayOfImgSources = JSON.parse(xmlhttp.responseText);
-		//console.log(arrayOfImgSources);
+		console.log(arrayOfImgSources);
 		fillPageWithGlobalGallery(arrayOfImgSources);
 
 		let likes = document.getElementsByClassName('like');
@@ -81,6 +81,10 @@ function fillPageWithGlobalGallery(arrayOfImgSources) {
 
 function likesListener(like, imgArr) {
 	like.addEventListener('click', function () {
+		if (getCurrentUserId(imgArr) === null) {
+			alert('Please Login or Sign up to do stuff');
+			return ;
+		}
 		var imgSrc = like.parentNode.parentNode
 			.getElementsByTagName('img')[0]
 			.getAttribute('src');
@@ -136,6 +140,10 @@ function getCurrentUserId(arrayOfImgSources) {
 	let indexOfUserId = arrayOfImgSources.findIndex(function (item) {
 		return item.user_id;
 	});
-	let currentUserId = arrayOfImgSources[indexOfUserId].user_id;
-	return currentUserId;
+	if (indexOfUserId === -1) {
+		return null;
+	} else {
+		let currentUserId = arrayOfImgSources[indexOfUserId].user_id;
+		return currentUserId;
+	}
 }
