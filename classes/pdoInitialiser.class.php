@@ -61,6 +61,58 @@ class PdoInitialiser {
 		)";
 		$pdo->query($queryStatement);
 	}
+
+	public function getCommentsForImage($pdo, $imageId) {
+		$statement = "SELECT * FROM `comments` WHERE `img_id`=? ORDER BY `datetime` DESC";
+		$preparedStatement = $pdo->prepare($statement);
+		$preparedStatement->execute([$imageId]);
+		$commentsArray = $preparedStatement->fetchAll();
+		return $commentsArray;
+	}
+
+	public function getLoginById($pdo, $loginId) {
+		$statement = "SELECT `login` FROM `users` WHERE `id`=?";
+		$preparedStatement = $pdo->prepare($statement);
+		$preparedStatement->execute([$loginId]);
+		$login = $preparedStatement->fetchAll();
+		return $login[0]['login'];
+	}
+
+	public function getUserIdFromDbByLogin($pdo, $login) {
+		$statement = "SELECT `id` FROM `users` WHERE `login`=?;";
+		$preparedStatement = $pdo->prepare($statement);
+		$preparedStatement->execute([$login]);
+		$id = $preparedStatement->fetchAll();
+		return $id[0][0];
+	}
+
+	public function getImagePathByImageId($pdo, $imageId) {
+		$statement = "SELECT `img_path` FROM `collage_images` WHERE `id`=?;";
+		$preparedStatement = $pdo->prepare($statement);
+		$preparedStatement->execute([$imageId]);
+		$imagePath = $preparedStatement->fetchAll();
+		return $imagePath[0][0];
+	}
+
+	public function isUserLikedImage($pdo, $imageId, $userId) {
+		$statement = "SELECT * FROM `likes` WHERE `img_id`=? AND `user_id`=?";
+		$preparedStatement = $pdo->prepare($statement);
+		$preparedStatement->execute([$imageId, $userId]);
+		$imagePath = $preparedStatement->fetchAll();
+		if (isset($imagePath[0][0])) {
+			return true;
+		} else {
+			return false;
+		}
+	}
+
+	public function countLikesForImage($pdo, $imageId) {
+		$statement = "SELECT COUNT(`img_id`) FROM `likes` WHERE `img_id`=?";
+		$preparedStatement = $pdo->prepare($statement);
+		$preparedStatement->execute([$imageId]);
+		$likesCount = $preparedStatement->fetchAll();
+		return $likesCount[0][0];
+	}
 }
 
 ?>

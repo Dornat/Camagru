@@ -12,9 +12,8 @@
 		<?php require_once "header.php"; ?>
 		<div class="global-gallery-container">
 			<div id="global-gallery-wrapper">
-
+				<!-- This container will be filled from database -->
 			</div>
-			<!-- This container will be filled from database -->
 		</div>
 
 		<?php require_once "footer.php"; ?>

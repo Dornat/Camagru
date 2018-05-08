@@ -1,5 +1,6 @@
 var xmlhttp = new XMLHttpRequest();
 
+console.log(window.location.search.substr(1));
 xmlhttp.onreadystatechange = function () {
 	if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
 		//console.log(xmlhttp.responseText);
@@ -41,6 +42,7 @@ function fillPageWithGlobalGallery(arrayOfImgSources) {
 		function createLikeAndCommentContainer() {
 			let container = document.createElement('div');
 			container.setAttribute('class', 'like-and-comment-container');
+			var is_liked = '';
 
 			let like = document.createElement('i');
 			like.setAttribute('class', 'fas fa-thumbs-up like');
@@ -59,12 +61,19 @@ function fillPageWithGlobalGallery(arrayOfImgSources) {
 			}
 			likeCount.innerHTML = imgArr.like_count;
 			like.appendChild(likeCount);
+			console.log(imgArr.img_path);
 
-			let comments = document.createElement('i');
-			comments.setAttribute('class', 'fas fa-comments comments');
+			let commentHref = document.createElement('a');
+			commentHref.setAttribute(
+				'href',
+				'comment_page.php?image_id=' + imgArr.id
+			);
+			let commentIcon = document.createElement('i');
+			commentIcon.setAttribute('class', 'fas fa-comments comments');
+			commentHref.appendChild(commentIcon);
 
 			container.appendChild(like);
-			container.appendChild(comments);
+			container.appendChild(commentHref);
 			return container;
 		}
 	}

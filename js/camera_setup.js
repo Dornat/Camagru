@@ -93,7 +93,6 @@ function takeASnapshot(button, canvas) {
 		canvas.height = video.height;
 		if (document.getElementById('video').tagName == 'IMG') {
 			var backgroundImg = document.getElementById('video');
-			console.log(backgroundImg);
 			var videoCustomImage = new Image();
 			var relativeLeftMargin;
 			var relativeTopMargin;
