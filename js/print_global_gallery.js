@@ -1,12 +1,29 @@
+if (!parseInt(window.location.search.substr(1).replace(/^\D+/g, ''))) {
+	var currentPage = 1;
+} else {
+	var currentPage = parseInt(window.location.search.substr(1).replace(/^\D+/g, ''));
+}
+
+var numberOfJunkThatIAddToEndOfArray = 2;
+
 var xmlhttp = new XMLHttpRequest();
 
-console.log(window.location.search.substr(1));
 xmlhttp.onreadystatechange = function () {
 	if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
-		//console.log(xmlhttp.responseText);
+		console.log(xmlhttp.responseText);
 		var arrayOfImgSources = JSON.parse(xmlhttp.responseText);
 		console.log(arrayOfImgSources);
+		let indexOfPageCell = arrayOfImgSources.findIndex(function (item) {
+			return item.number_of_pages;
+		});
+		let numOfPages = arrayOfImgSources[indexOfPageCell]['number_of_pages'];
+		console.log(arrayOfImgSources[indexOfPageCell]['number_of_pages']);
 		fillPageWithGlobalGallery(arrayOfImgSources);
+		if (numOfPages > 1) {
+			document.getElementById('pagination-container').appendChild(
+				createPagination(currentPage, numOfPages)
+			);
+		}
 
 		let likes = document.getElementsByClassName('like');
 		for (let i = 0; i < likes.length; i++) {
@@ -16,14 +33,14 @@ xmlhttp.onreadystatechange = function () {
 }
 
 let randNum = 'num=' + Math.random();
-xmlhttp.open('POST', '../print_global_gallery.php', true);
+xmlhttp.open('POST', '../print_global_gallery.php?page=' + currentPage, true);
 xmlhttp.setRequestHeader('content-type', 'application/x-www-form-urlencoded');
 xmlhttp.send(randNum);
 
 function fillPageWithGlobalGallery(arrayOfImgSources) {
 	let galleryContainer = document.getElementsByClassName('global-gallery-container')[0];
 	let galleryWrapper = document.getElementById('global-gallery-wrapper');
-	for (let i = 0; i < arrayOfImgSources.length - 1; i++) {
+	for (let i = 0; i < arrayOfImgSources.length - numberOfJunkThatIAddToEndOfArray; i++) {
 		galleryWrapper.appendChild(
 			assambleImageContainer(
 				createImage(arrayOfImgSources[i]['img_path']), arrayOfImgSources[i]
@@ -61,7 +78,6 @@ function fillPageWithGlobalGallery(arrayOfImgSources) {
 			}
 			likeCount.innerHTML = imgArr.like_count;
 			like.appendChild(likeCount);
-			console.log(imgArr.img_path);
 
 			let commentHref = document.createElement('a');
 			commentHref.setAttribute(
@@ -155,4 +171,94 @@ function getCurrentUserId(arrayOfImgSources) {
 		let currentUserId = arrayOfImgSources[indexOfUserId].user_id;
 		return currentUserId;
 	}
+}
+
+
+function createPagination(currentPage, numberOfPages) {
+	let paginationDiv = document.createElement('div');
+	paginationDiv.setAttribute('class', 'pagination');
+
+	let leftArrowHref = createLeftArrow();
+	let rightArrowHref = createRightArrow();
+
+	paginationDiv.appendChild(leftArrowHref);
+
+	let paginationArray = pagination(currentPage, numberOfPages);
+
+	for (let i of paginationArray) {
+		let href = document.createElement('a');
+		if (i == 1) {
+			href.setAttribute('href', 'index.php');
+			if (i == currentPage) {
+				href.setAttribute('class', 'active');
+			}
+			href.innerHTML = i;
+		} else if (i == '...') {
+			href.setAttribute('href', '#');
+			href.innerHTML = i;
+		} else {
+			href.setAttribute('href', 'index.php?page=' + i);
+			if (i == currentPage) {
+				href.setAttribute('class', 'active');
+			}
+			href.innerHTML = i;
+		}
+		paginationDiv.appendChild(href);
+	}
+
+	paginationDiv.appendChild(rightArrowHref);
+	return paginationDiv;
+
+	function createLeftArrow() {
+		let leftArrowHref = document.createElement('a');
+		if (currentPage == 1) {
+			leftArrowHref.setAttribute('class', 'disabled');
+		}
+		if (currentPage != 1) {
+			leftArrowHref.setAttribute('href', 'index.php?page=' + (currentPage - 1));
+		}
+		leftArrowHref.innerHTML = '&laquo;';
+		return leftArrowHref;
+	}
+
+	function createRightArrow() {
+		let rightArrowHref = document.createElement('a');
+		if (currentPage != numberOfPages) {
+			rightArrowHref.setAttribute('href', 'index.php?page=' + (currentPage + 1));
+		}
+		if (currentPage == numberOfPages) {
+			rightArrowHref.setAttribute('class', 'disabled');
+		}
+		rightArrowHref.innerHTML = '&raquo;';
+		return rightArrowHref;
+	}
+}
+
+function pagination(currentPage, numberOfPages) {
+	var delta = 1,
+		range = [],
+		rangeWithDots = [],
+		l;
+
+	range.push(1)
+	for (let i = currentPage - delta; i <= currentPage + delta; i++) {
+		if (i < numberOfPages && i > 1) {
+			range.push(i);
+		}
+	}
+	range.push(numberOfPages);
+
+	for (let i of range) {
+		if (l) {
+			if (i - l === 2) {
+				rangeWithDots.push(l + 1);
+			} else if (i - l !== 1) {
+				rangeWithDots.push('...');
+			}
+		}
+		rangeWithDots.push(i);
+		l = i;
+	}
+
+	return rangeWithDots;
 }

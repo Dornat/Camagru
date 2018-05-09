@@ -2,7 +2,7 @@
 require_once 'config/setup.php';
 session_start();
 
-$globalGallery = getGlobalGallery($pdo);
+$globalGallery = getGlobalGallery($pdo, getNumberOfPages($pdo));
 $globalGalleryArr = array();
 
 if(!empty($globalGallery[0][0])) {
@@ -12,20 +12,33 @@ if(!empty($globalGallery[0][0])) {
 		$globalGalleryArr[] = $img;
 	}
 	if (isset($_SESSION['userName'])) {
-		$globalGalleryArr[] = array('user_id' => getUserIdFromDb($pdo));
+		$globalGalleryArr[] = array(
+			'user_id' => $pdoInit->getUserIdFromDbByLogin($pdo, $_SESSION['userName'])
+		);
 	} else {
 		$globalGalleryArr[] = array('user_id' => null);
 	}
+	$globalGalleryArr[] = array('number_of_pages' => getNumberOfPages($pdo));
 }
 
+//echo $_GET['page'];
 echo json_encode($globalGalleryArr);
 
-function getGlobalGallery($pdo) {
-	$statement = "SELECT `id`,`img_path` FROM `collage_images` ORDER BY `id` DESC";
+function getGlobalGallery($pdo, $numberOfPages) {
+	$statement = "SELECT `id`,`img_path` FROM `collage_images` ORDER BY `id` DESC
+		LIMIT " . (($_GET['page'] - 1) * 12) . ", 12";
 	$preparedStatement = $pdo->prepare($statement);
-	$preparedStatement->execute();
+	$preparedStatement->execute([(($numberOfPages - 1) * 12)]);
 	$globalGallery = $preparedStatement->fetchAll();
 	return $globalGallery;
+}
+
+function getNumberOfPages($pdo) {
+	$statement = "SELECT COUNT(`id`) FROM `collage_images`";
+	$preparedStatement = $pdo->prepare($statement);
+	$preparedStatement->execute();
+	$numberOfPages = $preparedStatement->fetchAll();
+	return ceil($numberOfPages[0][0] / 12);
 }
 
 function getLikesCountOnImgId($pdo, $imgId) {
@@ -44,11 +57,4 @@ function getUserIdsWhoLikedImg($pdo, $imgId) {
 	return $userIds;
 }
 
-function getUserIdFromDb($pdo) {
-	$statement = "SELECT `id` FROM `users` WHERE `login`=?;";
-	$preparedStatement = $pdo->prepare($statement);
-	$preparedStatement->execute([$_SESSION['userName']]);
-	$id = $preparedStatement->fetchAll();
-	return $id[0][0];
-}
 ?>

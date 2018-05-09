@@ -45,9 +45,57 @@ footer {
 	margin: 0 0 0 20px;
 }
 .delete-comment-button {
+	text-align: center;
 	margin-left: 525px;
+	padding: 0;
 }
-
+@media screen and (max-width: 750px) {
+	.comment-global-gallery-img-container {
+		width: 480px;
+	}
+	.comment-gallery-img {
+		width: 430px;
+	}
+	.comment-box, .add-comment-box {
+		width: 440px;
+	}
+	.delete-comment-button {
+		margin-left: 300px;
+	}
+}
+@media screen and (max-width: 550px) {
+	.comment-global-gallery-img-container {
+		width: 355px;
+	}
+	.comment-gallery-img {
+		width: 300px;
+	}
+	.comment-box, .add-comment-box {
+		width: 315px;
+	}
+	.delete-comment-button {
+		margin-left: 215px;
+		font-size: 12px;
+		width: 100px !important;
+	}
+}
+@media screen and (max-width: 400px) {
+	.comment-global-gallery-img-container {
+		width: 290px;
+	}
+	.comment-gallery-img {
+		width: 250px;
+	}
+	.comment-box, .add-comment-box {
+		width: 250px;
+	}
+	.delete-comment-button {
+		margin-left: 155px;
+	}
+	footer {
+		font-size: 12px;
+	}
+}
 #comment-textarea {
 	margin: 0 0 20px 0;
 	padding: 20px;

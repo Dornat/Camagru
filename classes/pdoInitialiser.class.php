@@ -22,6 +22,7 @@ class PdoInitialiser {
 	public function pdoInit() {
 		try {
 			$pdo = new PDO($this->dsn, $this->user, $this->password);
+			$pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 			$this->createDbIfNotExists($pdo);
 			$this->useDb($pdo);
 			$this->createUserTableIfNotExists($pdo);
@@ -49,6 +50,7 @@ class PdoInitialiser {
 			`email` varchar(255) NOT NULL,
 			`password` varchar(255) NOT NULL,
 			`is_verified` ENUM(\"false\", \"true\") DEFAULT \"false\" NOT NULL,
+			`email_on_img_comment` ENUM(\"false\", \"true\") DEFAULT \"true\" NOT NULL,
 			`verif_code` varchar(255) NOT NULL)";
 		$pdo->query($queryStatement);
 	}
@@ -112,6 +114,13 @@ class PdoInitialiser {
 		$preparedStatement->execute([$imageId]);
 		$likesCount = $preparedStatement->fetchAll();
 		return $likesCount[0][0];
+	}
+
+	public function addCommentToDb($pdo, $img_id, $user_id, $comment) {
+		$statement = "INSERT INTO `comments` (`img_id`, `user_id`, `comment`)
+			VALUES (?, ?, ?);";
+		$preparedStatement = $pdo->prepare($statement);
+		$preparedStatement->execute([$img_id, $user_id, htmlspecialchars($comment)]);
 	}
 }
 

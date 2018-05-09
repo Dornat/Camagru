@@ -31,17 +31,19 @@ $likesCount = $pdoInit->countLikesForImage($pdo, $_GET['image_id']);
 			<div class="global-gallery-img-container comment-global-gallery-img-container">
 				<img src="<?php echo $pdoInit->getImagePathByImageId($pdo, $_GET['image_id']); ?>" class="comment-gallery-img" id="user_collages/img131.png">
 				<div class="like-and-comment-container">
-					<i id="<?php echo $_GET['image_id']; ?>" class="fas fa-thumbs-up like <?php echo $liked; ?>">
+					<i id="<?php echo $_GET['image_id'] . '/' . $userIdFromDb; ?>" class="fas fa-thumbs-up like <?php echo $liked; ?>" onClick="likeClick()">
 						<span class="like-count"><?php echo $likesCount; ?></span>
 					</i>
 				</div>
 			</div>
 			<div class="actual-comments-container">
 <?php		if (isset($_SESSION['userName'])): ?>
-				<div class="add-comment-box">
-					<textarea rows="3" name="comment-textarea" id="comment-textarea" placeholder="Type your comment here..."></textarea>
-					<button id="<?php echo $pdoInit->getUserIdFromDbByLogin($pdo, $_SESSION['userName']); ?>" class="take-picture-button delete-comment-button" onClick="addComment()">Add comment</button>
-				</div>
+				<form method="post" action="add_comment_to_db.php?image_id=<?php echo $_GET['image_id']; ?>">
+					<div class="add-comment-box">
+						<textarea rows="3" name="comment-textarea" id="comment-textarea" placeholder="Type your comment here..." required ></textarea>
+						<input type="submit" name="add_comment" value="Add comment" class="take-picture-button delete-comment-button">
+					</div>
+				</form>
 <?php		endif; ?>
 <?php
 $commentsArray = $pdoInit->getCommentsForImage($pdo, $_GET['image_id']);
@@ -71,7 +73,7 @@ echo $comment['comment'];
 if (isset($_SESSION['userName'])):
 	if ($pdoInit->getLoginById($pdo, $comment['user_id']) === $_SESSION['userName']):
 ?>
-					<button class="take-picture-button delete-comment-button">Delete</button>
+					<button id="<?php echo $comment['id']; ?>" class="take-picture-button delete-comment-button" onClick="deleteComment()">Delete</button>
 <?php
 	endif;
 endif;

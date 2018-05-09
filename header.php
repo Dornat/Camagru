@@ -11,7 +11,7 @@ if (isset($_POST['logout'])) {
 <header>
 	<div class="navbar-container">
 		<div>
-			<a href="index.php?test=123" class="logo"><h1>Camagru!</h1></a>
+			<a href="index.php" class="logo"><h1>Camagru!</h1></a>
 		</div>
 	</div>
 	<?php if (userNameIsSet()) { ?>
