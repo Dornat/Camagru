@@ -9,7 +9,7 @@ require_once 'config/setup.php';
 		<link rel="stylesheet" href="css/login_form.css">
 		<link rel="stylesheet" href="css/global_gallery.css">
 		<link rel="stylesheet" href="css/comment_page.css">
-		<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.10/css/all.css" integrity="sha384-+d0P83n9kaQMCwj8F4RJB66tzIwOKmrdb46+porD/OvrJ+37WqIM7UoBtwHO6Nlg" crossorigin="anonymous">
+		<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.12/css/all.css" integrity="sha384-G0fIWCsCzJIMAVNQPfjH08cyYaUtMwjJwqiRKxxE/rx96Uroj1BtIQ6MLJuheaO9" crossorigin="anonymous">
 		<meta name="viewport" content="width=device-width">
 	</head>
 	<body>
@@ -31,6 +31,7 @@ $likesCount = $pdoInit->countLikesForImage($pdo, $_GET['image_id']);
 			<div class="global-gallery-img-container comment-global-gallery-img-container">
 				<img src="<?php echo $pdoInit->getImagePathByImageId($pdo, $_GET['image_id']); ?>" class="comment-gallery-img" id="user_collages/img131.png">
 				<div class="like-and-comment-container">
+					<p><span class="made-by">Made by:</span><i class="fas fa-user-astronaut"></i><span class="made-by-author"><?php echo $pdoInit->getUserLoginByImageId($pdo, $_GET['image_id']); ?></span></p>
 					<i id="<?php echo $_GET['image_id'] . '/' . $userIdFromDb; ?>" class="fas fa-thumbs-up like <?php echo $liked; ?>" onClick="likeClick()">
 						<span class="like-count"><?php echo $likesCount; ?></span>
 					</i>

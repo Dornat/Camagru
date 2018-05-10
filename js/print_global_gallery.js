@@ -10,14 +10,13 @@ var xmlhttp = new XMLHttpRequest();
 
 xmlhttp.onreadystatechange = function () {
 	if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
-		console.log(xmlhttp.responseText);
+		//console.log(xmlhttp.responseText);
 		var arrayOfImgSources = JSON.parse(xmlhttp.responseText);
 		console.log(arrayOfImgSources);
 		let indexOfPageCell = arrayOfImgSources.findIndex(function (item) {
 			return item.number_of_pages;
 		});
 		let numOfPages = arrayOfImgSources[indexOfPageCell]['number_of_pages'];
-		console.log(arrayOfImgSources[indexOfPageCell]['number_of_pages']);
 		fillPageWithGlobalGallery(arrayOfImgSources);
 		if (numOfPages > 1) {
 			document.getElementById('pagination-container').appendChild(
@@ -86,6 +85,11 @@ function fillPageWithGlobalGallery(arrayOfImgSources) {
 			);
 			let commentIcon = document.createElement('i');
 			commentIcon.setAttribute('class', 'fas fa-comments comments');
+			let commentsCount = document.createElement('span');
+			commentsCount.setAttribute('class', 'like-count');
+			commentsCount.innerHTML = imgArr.comments_count;
+			commentIcon.appendChild(commentsCount);
+
 			commentHref.appendChild(commentIcon);
 
 			container.appendChild(like);

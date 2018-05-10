@@ -122,6 +122,23 @@ class PdoInitialiser {
 		$preparedStatement = $pdo->prepare($statement);
 		$preparedStatement->execute([$img_id, $user_id, htmlspecialchars($comment)]);
 	}
+
+	public function getUserLoginByImageId($pdo, $imageId) {
+		$statement = "SELECT `login` FROM `users` INNER JOIN `collage_images`
+			ON `users`.`id` = `collage_images`.`user_id` WHERE `collage_images`.`id`=?";
+		$preparedStatement = $pdo->prepare($statement);
+		$preparedStatement->execute([$imageId]);
+		$login = $preparedStatement->fetchAll();
+		return $login[0][0];
+	}
+
+	public function getEmailNotificationStatusByLogin($pdo, $login) {
+		$statement = "SELECT `email_on_img_comment` FROM `users` WHERE `login`=?";
+		$preparedStatement = $pdo->prepare($statement);
+		$preparedStatement->execute([$login]);
+		$status = $preparedStatement->fetchAll();
+		return $status[0][0];
+	}
 }
 
 ?>

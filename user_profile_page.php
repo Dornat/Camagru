@@ -5,7 +5,7 @@
 		<link rel="stylesheet" href="css/style.css">
 		<link rel="stylesheet" href="css/login_form.css">
 		<link rel="stylesheet" href="css/profile_container.css">
-		<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.10/css/all.css" integrity="sha384-+d0P83n9kaQMCwj8F4RJB66tzIwOKmrdb46+porD/OvrJ+37WqIM7UoBtwHO6Nlg" crossorigin="anonymous">
+		<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.12/css/all.css" integrity="sha384-G0fIWCsCzJIMAVNQPfjH08cyYaUtMwjJwqiRKxxE/rx96Uroj1BtIQ6MLJuheaO9" crossorigin="anonymous">
 	</head>
 	<body>
 <?php
@@ -45,6 +45,15 @@ if (isset($_POST['login'])) {
 		<div class="profile-container">
 			<div class="profile-inner-container">
 				<h2>Edit Profile</h2>
+				<label class="email-notification-container">
+				<input type="checkbox" <?php
+if ($pdoInit->getEmailNotificationStatusByLogin($pdo, $_SESSION['userName']) == 'true') {
+	echo 'checked="checked"';
+}
+				?> onClick="changeEmailNotification()">
+					<span class="checkmark"></span>
+					<p>Recieve email notification when someone comments on my image</p>
+				</label>
 				<p class="careful-message">Be careful, everything you type into fields then press 'Save changes' will be applied to your account.</p>
 				<form id="form" action="user_profile_page.php" method="post" class="login-form-container profile-form-container">
 					<input value="<?php echo $_SESSION['userName']; ?>" class="field-of-login-form field-of-signup-form" type="text" name="login" placeholder="Login" required pattern="^[a-zA-Z_0-9]{1,32}$" oninput="setCustomValidity(''); checkValidity(); setCustomValidity(validity.valid ? '' : 'Invalid login.');">
@@ -55,6 +64,7 @@ if (isset($_POST['login'])) {
 			</div>
 		</div>
 		<?php require_once "footer.php"; ?>
+		<script src="js/user_profile_page.js"></script>
 	</body>
 </html>
 <?php

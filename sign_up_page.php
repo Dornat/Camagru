@@ -88,7 +88,6 @@ function emailMessage($login, $password, $verificationCode) {
 	$message .= "<p>Your password is: $password (don't lose it)</p>";
 	$message .= "<p>To finish your registration follow the link below:</p>";
 	$message .= "<a href=\"http://127.0.0.1:8100/user_email_varification.php?verif_code=$verificationCode\">Click on me please</a></body></html>";
-	$message .= "<p><em>If you don't understand whats going on. Just ignore this email.</em></p>";
 
 	return $message;
 }
