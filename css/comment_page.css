@@ -27,9 +27,14 @@ footer {
 	display: flex;
 	flex-direction: column;
 	box-shadow: 0 1px 4px rgba(0, 0, 0, .6);
-	width: 660px;
 	margin-bottom: 20px;
 	padding: 20px;
+}
+.comment-box, .add-comment-box, .actual-comment p {
+	width: 660px;
+}
+.actual-comment p {
+	overflow-wrap: break-word;
 }
 .author-date-container {
 	display: flex;
@@ -56,7 +61,7 @@ footer {
 	.comment-gallery-img {
 		width: 430px;
 	}
-	.comment-box, .add-comment-box {
+	.comment-box, .add-comment-box, .actual-comment p {
 		width: 440px;
 	}
 	.delete-comment-button {
@@ -70,7 +75,7 @@ footer {
 	.comment-gallery-img {
 		width: 300px;
 	}
-	.comment-box, .add-comment-box {
+	.comment-box, .add-comment-box, .actual-comment p {
 		width: 315px;
 	}
 	.delete-comment-button {
@@ -86,7 +91,7 @@ footer {
 	.comment-gallery-img {
 		width: 250px;
 	}
-	.comment-box, .add-comment-box {
+	.comment-box, .add-comment-box, .actual-comment p {
 		width: 250px;
 	}
 	.delete-comment-button {

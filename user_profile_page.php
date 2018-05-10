@@ -10,14 +10,11 @@
 	<body>
 <?php
 require_once "header.php";
-returnHomeIfUserNameNotSet();
 
-function returnHomeIfUserNameNotSet() {
-	if (isset($_SESSION['userName'])) {
-		if ($_SESSION['userName'] == false) {
-			header("Location: index.php");
-		}
-	}
+if (!isset($_SESSION['userName'])) {
+	header("Location: index.php");
+} else if ($_SESSION['userName'] == '') {
+	header("Location: index.php");
 }
 
 if (isset($_POST['login'])) {
@@ -33,10 +30,10 @@ if (isset($_POST['login'])) {
 				);
 		}
 	}
-	if (emailChanged($pdo)) {
+	if (emailChanged($pdo) && newEmailIsNotInDb($pdo)) {
 		setNewEmailToDb($pdo);
 	}
-	if (loginChanged()) {
+	if (loginChanged() && newLoginIsNotInDb($pdo)) {
 		setNewLoginToDb($pdo);
 		$_SESSION['userName'] = $_POST['login'];
 	}
@@ -50,7 +47,7 @@ if (isset($_POST['login'])) {
 if ($pdoInit->getEmailNotificationStatusByLogin($pdo, $_SESSION['userName']) == 'true') {
 	echo 'checked="checked"';
 }
-				?> onClick="changeEmailNotification()">
+?> onClick="changeEmailNotification()">
 					<span class="checkmark"></span>
 					<p>Recieve email notification when someone comments on my image</p>
 				</label>
@@ -103,6 +100,30 @@ function emailChanged($pdo) {
 		return true;
 	}
 	return false;
+}
+
+function newEmailIsNotInDb($pdo) {
+	$statement = "SELECT `email` FROM `users` WHERE `email`=?";
+	$preparedStatement = $pdo->prepare($statement);
+	$preparedStatement->execute([strtolower($_POST['email'])]);
+	$email = $preparedStatement->fetchAll();
+	if (isset($email[0][0])) {
+		return false;
+	}
+
+	return true;
+}
+
+function newLoginIsNotInDb($pdo) {
+	$statement = "SELECT `login` FROM `users` WHERE `login`=?";
+	$preparedStatement = $pdo->prepare($statement);
+	$preparedStatement->execute([strtolower($_POST['login'])]);
+	$login = $preparedStatement->fetchAll();
+	if (isset($login[0][0])) {
+		return false;
+	}
+
+	return true;
 }
 
 function userEmailFromDb($pdo) {

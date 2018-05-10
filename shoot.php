@@ -9,7 +9,12 @@
 		<meta name="viewport" content="width=device-width">
 	</head>
 	<body>
-		<?php require_once "header.php"; ?>
+		<?php require_once "header.php";
+		if (!isset($_SESSION['userName'])) {
+			header("Location: index.php");
+		} else if ($_SESSION['userName'] == '') {
+			header("Location: index.php");
+		} ?>
 		<div class="webcam-container">
 			<div id="webcam-container-left">
 				<div id="webcam-wrapper">

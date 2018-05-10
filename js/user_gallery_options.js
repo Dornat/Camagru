@@ -1,4 +1,7 @@
 function deleteImgFromDb(imgSrc) {
+	if (confirm('Do you really want to delete this masterpiece?') == false) {
+		return ;
+	}
 	let xmlhttp = new XMLHttpRequest();
 
 	xmlhttp.onreadystatechange = function () {

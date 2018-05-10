@@ -5,6 +5,11 @@
 	height: 100%;
 	margin-top: -400px;
 }
+@media screen and (max-width: 700px) {
+	.profile-container {
+		margin-top: 0;
+	}
+}
 .profile-inner-container {
 	display: flex;
 	align-items: center;

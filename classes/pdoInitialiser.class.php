@@ -46,8 +46,8 @@ class PdoInitialiser {
 	private function createUserTableIfNotExists($pdo) {
 		$queryStatement = "CREATE TABLE IF NOT EXISTS `users` (
 			`id` INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
-			`login` varchar(32) NOT NULL,
-			`email` varchar(255) NOT NULL,
+			`login` varchar(32) NOT NULL UNIQUE,
+			`email` varchar(255) NOT NULL UNIQUE,
 			`password` varchar(255) NOT NULL,
 			`is_verified` ENUM(\"false\", \"true\") DEFAULT \"false\" NOT NULL,
 			`email_on_img_comment` ENUM(\"false\", \"true\") DEFAULT \"true\" NOT NULL,
@@ -77,6 +77,9 @@ class PdoInitialiser {
 		$preparedStatement = $pdo->prepare($statement);
 		$preparedStatement->execute([$loginId]);
 		$login = $preparedStatement->fetchAll();
+		if (!isset($login[0]['login'])) {
+			return 'Undefined_Blob';
+		}
 		return $login[0]['login'];
 	}
 
@@ -129,6 +132,9 @@ class PdoInitialiser {
 		$preparedStatement = $pdo->prepare($statement);
 		$preparedStatement->execute([$imageId]);
 		$login = $preparedStatement->fetchAll();
+		if (!isset($login[0][0])) {
+			return 'Undefined_Blob';
+		}
 		return $login[0][0];
 	}
 

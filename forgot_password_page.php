@@ -1,4 +1,10 @@
-<?php include("config/setup.php"); ?>
+<?php include("config/setup.php");
+session_start();
+if (isset($_SESSION['userName']) && $_SESSION['userName'] != '') {
+	header("Location: index.php");
+}
+
+?>
 <!DOCTYPE html>
 <html lang="en">
 	<head>
