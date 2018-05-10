@@ -27,6 +27,8 @@ class PdoInitialiser {
 			$this->useDb($pdo);
 			$this->createUserTableIfNotExists($pdo);
 			$this->createCollageImagesTableIfNotExists($pdo);
+			$this->createLikesTableIfNotExists($pdo);
+			$this->createCommentsTableIfNotExists($pdo);
 			return $pdo;
 		} catch (PDOException $e) {
 			printf("Connection to database wasn't established: %s", $e->getMessage());
@@ -60,6 +62,26 @@ class PdoInitialiser {
 			`id` INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
 			`user_id` INT NOT NULL,
 			`img_path` varchar(255) NOT NULL
+		)";
+		$pdo->query($queryStatement);
+	}
+
+	private function createLikesTableIfNotExists($pdo) {
+		$queryStatement = "CREATE TABLE IF NOT EXISTS `likes` (
+			`id` INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
+			`user_id` INT NOT NULL,
+			`img_id` INT NOT NULL
+		)";
+		$pdo->query($queryStatement);
+	}
+
+	private function createCommentsTableIfNotExists($pdo) {
+		$queryStatement = "CREATE TABLE IF NOT EXISTS `comments` (
+			`id` INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
+			`user_id` INT NOT NULL,
+			`img_id` INT NOT NULL,
+			`comment` text NOT NULL,
+			`datetime` datetime DEFAULT CURRENT_TIMESTAMP
 		)";
 		$pdo->query($queryStatement);
 	}
