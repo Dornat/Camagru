@@ -1,8 +1,8 @@
 <?php
 
-$DB_HOST = "localhost";
-$DB_NAME = "camagru";
-$DB_USER = "root";
-$DB_PASSWORD = "fjdjrufu";
+$DB_HOST = "";
+$DB_NAME = "";
+$DB_USER = "";
+$DB_PASSWORD = "";
 
 ?>
