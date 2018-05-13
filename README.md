@@ -2,6 +2,8 @@
 
 This is a first project from Web Branch of School 42.
 
+[Click Here](https://sleepy-waters-92816.herokuapp.com/index.php) to see it in action. I deployed it to Heroku.
+
 ## Summary
 
 > The goal of this project is to build a web application a little more complex than the previous ones with a little less means.
